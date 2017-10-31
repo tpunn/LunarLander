@@ -1,4 +1,6 @@
 package com.bitsforabetterworld.lunarlander;
+import java.io.IOException;
+
 import javax.swing.SwingUtilities;
 
 import com.bitsforabetterworld.lunarlander.ui.Display;
@@ -17,7 +19,13 @@ public class Main {
 		final Display display = new Display();
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                display.createAndShowGUI();
+            	try {
+            		display.createAndShowGUI();
+            	}
+            	catch (IOException exp) {
+            		System.err.println("Exception: "+exp);
+            		exp.printStackTrace(System.err);
+            	}
             }
 		});
 		System.err.println("Hey there!");

@@ -14,11 +14,13 @@ public class Main {
 	}
 	
 	public static void main(String[] args) {
+		final Display display = new Display();
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                Display.createAndShowGUI();
+                display.createAndShowGUI();
             }
 		});
+		System.err.println("Hey there!");
 	}
 
 }

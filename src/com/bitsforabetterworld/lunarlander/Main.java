@@ -1,6 +1,7 @@
 package com.bitsforabetterworld.lunarlander;
+import javax.swing.SwingUtilities;
 
-
+import com.bitsforabetterworld.lunarlander.ui.Display;
 
 public class Main {
 
@@ -13,8 +14,11 @@ public class Main {
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                Display.createAndShowGUI();
+            }
+		});
 	}
 
 }

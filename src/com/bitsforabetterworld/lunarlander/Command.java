@@ -13,6 +13,7 @@ package com.bitsforabetterworld.lunarlander;
  *
  */
 enum Command {
+	None,
 	Thrust,
 	RollClockwise,
 	RollCounterclockwise,

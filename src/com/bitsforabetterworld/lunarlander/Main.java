@@ -1,6 +1,7 @@
 package com.bitsforabetterworld.lunarlander;
 import java.io.IOException;
 
+import javax.swing.RepaintManager;
 import javax.swing.SwingUtilities;
 
 import com.bitsforabetterworld.lunarlander.ui.Display;
@@ -29,6 +30,16 @@ public class Main {
             	}
             }
 		});
+		Object waiter = new Object();
+		try {
+			while (true) {
+				Thread.sleep(200L);
+				display.update();
+			}
+		}
+		catch (InterruptedException ex) {
+			System.err.println("Interrupted");
+		}
 		System.err.println("Hey there!");
 	}
 

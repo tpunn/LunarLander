@@ -21,6 +21,9 @@ public class Display {
 		
 	private static final int LANDING_PAD_WIDTH = 80;
 	private final Lander m_lander;
+	private RepaintManager repaintManager = null;
+	private JPanel m_panel = null;
+	
 	private long m_lastPaintNanos = 0;
 	// the nose of the lander is at (0, 48)
 	int[] xPoints = { 0, 16, 16, 32, 24, 16, -16, -24, -32, -16, -16 };
@@ -28,6 +31,15 @@ public class Display {
 	private final Polygon landerPolygon = new Polygon(xPoints, yPoints, xPoints.length);
 	public Display(Lander lander) {
 		m_lander = lander;
+	}
+	
+	public void update() {
+		if (repaintManager != null) {
+			if (m_panel != null) {
+				repaintManager.markCompletelyDirty(m_panel);
+				repaintManager.paintDirtyRegions();
+			}
+		}
 	}
 	public void paintScene(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
@@ -73,7 +85,7 @@ public class Display {
     	   @Override
     	   public void paintComponent(Graphics g) {
     		   Display.this.paintScene(g);
-    		   repaint();
+//    		   repaint();
     	   }
        };   
        panel.setPreferredSize(new Dimension(1440, 900));
@@ -83,5 +95,7 @@ public class Display {
        //Display the window.
        frame.pack();
        frame.setVisible(true);
+       repaintManager = RepaintManager.currentManager(panel);
+       m_panel = panel;
    }
 }

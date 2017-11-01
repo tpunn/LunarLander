@@ -1,6 +1,10 @@
 package com.bitsforabetterworld.lunarlander;
 
 public class Lander {
+	
+	private static final double ThrusterAcceleration = 1.0; // meters/second^2
+	private static final double RotationMotorAcceleration = 1.0; // radians/second
+	private static final double GravityAcceleration = 1.0; // meters/second^2
 	public enum RotationDirection {
 		Clockwise,
 		CounterClockwise
@@ -64,12 +68,41 @@ public class Lander {
 		m_isRotationMotorOn = false;
 	}
 	
+	public void clockTick(double dt) {
+		// With apologies to Isaac Newton
+		
+		// Let's update position and rotation according to their velocities
+		m_x += m_dx * dt;
+		m_y += m_dy * dt;
+		m_theta += m_dtheta * dt;
+		
+		// And let's apply gravity
+		m_dy += GravityAcceleration * dt;
+		
+		// And account for our engines!
+		if (m_isThrusterOn) {
+			m_dx += ThrusterAcceleration * dt * Math.sin(m_theta);
+			m_dy += ThrusterAcceleration * dt * Math.cos(m_theta);
+		}
+		
+		if (m_isRotationMotorOn) {
+			if (m_rotationMotorDirection == RotationDirection.Clockwise) {
+				m_dtheta += RotationMotorAcceleration * dt;
+			}
+			else {
+				m_dtheta -= RotationMotorAcceleration * dt;
+			}
+		}
+		
+	}
+	
 	private double m_x;
 	private double m_y;
 	private double m_dx;
 	private double m_dy;
 	private double m_theta;
 	private double m_dtheta;
+	private boolean m_isCrashed = false;
 	private boolean m_isThrusterOn = false;
 	private boolean m_isRotationMotorOn = false;
 	private RotationDirection m_rotationMotorDirection = RotationDirection.Clockwise;

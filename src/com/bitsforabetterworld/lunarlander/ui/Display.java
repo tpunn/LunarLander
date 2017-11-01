@@ -37,19 +37,19 @@ public class Display {
 			m_lander.clockTick(dtSeconds);
 		}
 		m_lastPaintNanos = now;
-		Rectangle rect = g2.getDeviceConfiguration().getBounds();
+		Rectangle windowRect = g2.getDeviceConfiguration().getBounds();
 		g2.setColor(Color.BLACK);
-		g2.fillRect(0,  0, rect.width, rect.height);
-		int surfaceY = 9 * rect.height / 10;
+		g2.fillRect(0,  0, windowRect.width, windowRect.height);
+		int surfaceY = 9 * windowRect.height / 10;
 		g2.setColor(Color.GRAY);
-		g2.fillRect(0,  surfaceY, rect.width, rect.height / 10);
+		g2.fillRect(0,  surfaceY, windowRect.width, windowRect.height / 10);
 		g2.setColor(Color.YELLOW);
-		g2.fillRect((rect.width - LANDING_PAD_WIDTH) / 2, surfaceY, LANDING_PAD_WIDTH, rect.height/100);
+		g2.fillRect((windowRect.width - LANDING_PAD_WIDTH) / 2, surfaceY, LANDING_PAD_WIDTH, windowRect.height/100);
 		g2.setColor(Color.BLUE);
 		Position landerPosition = m_lander.getPosition();
 		double theta = landerPosition.getTheta();
-		double x = landerPosition.getX();
-		double y = landerPosition.getY();
+		double x = windowRect.getWidth() * landerPosition.getX() / Position.WIDTH_OF_SCREEN ;
+		double y = (0.9 * windowRect.getHeight()) * (Position.TOP_OF_SCREEN - landerPosition.getY()) / Position.TOP_OF_SCREEN;
 //		AffineTransform scaleTransform = AffineTransform.getScaleInstance(rect.width / Position.WIDTH_OF_SCREEN, rect.height/Position.TOP_OF_SCREEN);
 		AffineTransform scaleTransform = AffineTransform.getScaleInstance(1.0, 1.0);
 		AffineTransform rotationTransform = AffineTransform.getRotateInstance(theta);

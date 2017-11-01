@@ -2,9 +2,9 @@ package com.bitsforabetterworld.lunarlander;
 
 public class Lander {
 	
-	private static final double ThrusterAcceleration = 1.0; // meters/second^2
-	private static final double RotationMotorAcceleration = 1.0; // radians/second
-	private static final double GravityAcceleration = 1.0; // meters/second^2
+	public static final double ThrusterAcceleration = 1.0; // meters/second^2
+	public static final double RotationMotorAcceleration = 1.0; // radians/second
+	public static final double GravityAcceleration = -1.0; // meters/second^2
 	public enum RotationDirection {
 		Clockwise,
 		CounterClockwise
@@ -17,7 +17,7 @@ public class Lander {
 	 * Then call build() on the Lander.Builder, to get an instance of Lander.
 	 * This is called the "Builder Pattern". It's pretty common in Java.
 	 */
-	public class Builder {
+	public static class Builder {
 		public Builder() {}
 		
 		public Lander build() { return new Lander(this); }
@@ -52,7 +52,10 @@ public class Lander {
 	{
 		return new Position(m_x, m_y, m_theta);
 	}
-	
+
+	public Velocity getVelocity() {
+		return new Velocity(m_dx, m_dy, m_dtheta);
+	}
 	public void turnOnThruster() {
 		m_isThrusterOn = true;
 	}
@@ -69,7 +72,7 @@ public class Lander {
 	}
 	
 	public void clockTick(double dt) {
-		// With apologies to Isaac Newton
+		// With apologies to Isaac Newton.
 		
 		// Let's update position and rotation according to their velocities
 		m_x += m_dx * dt;

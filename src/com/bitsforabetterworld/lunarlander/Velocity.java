@@ -6,19 +6,25 @@ package com.bitsforabetterworld.lunarlander;
  *
  */
 class Velocity {
-	private final double dx;
-	private final double dy;
+	private final double m_dx;
+	private final double m_dy;
+	private final double m_dtheta;
 	
-	public Velocity(double dx, double dy) {
-		this.dx = dx;
-		this.dy = dy;
+	public Velocity(double dx, double dy, double dtheta) {
+		m_dx = dx;
+		m_dy = dy;
+		m_dtheta = dtheta;
 	}
 	
 	public double getDx() {
-		return dx;
+		return m_dx;
 	}
 	
 	public double getDy() {
-		return dy;
+		return m_dy;
+	}
+	
+	public double getDtheta() {
+		return m_dtheta;
 	}
 }

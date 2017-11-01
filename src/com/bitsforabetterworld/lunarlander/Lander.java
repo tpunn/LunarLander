@@ -10,12 +10,11 @@ public class Lander {
 		CounterClockwise
 	}
 	
-	
 	/* How do you get an instance of Lander?
 	 * First, create a Lander.Builder, and call the various methods like x() and dy() to
 	 * set the desired construction parameters.
 	 * Then call build() on the Lander.Builder, to get an instance of Lander.
-	 * This is called the "Builder Pattern". It's pretty common in Java.
+	 * This is called the "Builder Pattern".
 	 */
 	public static class Builder {
 		public Builder() {}

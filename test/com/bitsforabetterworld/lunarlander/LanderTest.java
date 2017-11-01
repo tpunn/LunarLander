@@ -9,23 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class LanderTest {
-
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-	}
-
 	@Test
 	void testPosition() {
 		Lander lander = new Lander.Builder().x(32.3).y(62.6).theta(11.1).build();
@@ -90,7 +73,56 @@ class LanderTest {
 	}
 	
 	@Test
-	void testThrustOn() {
+	void testParabolicTrajectory1() {
+		Lander lander = new Lander.Builder().y(0.0).x(0.0).dx(8.0).dy(8.0).build();
+		lander.clockTick(1.0);
+		Position position = lander.getPosition();
+		assertEquals(8.0, position.getX());
+		assertEquals(8.0, position.getY());
+		Velocity velocity = lander.getVelocity();
+		assertEquals(8.0, velocity.getDx());
+		assertEquals(7.0, velocity.getDy());		
+	}
+
+	@Test
+	void testParabolicTrajectory8() {
+		Lander lander = new Lander.Builder().y(0.0).x(0.0).dx(8.0).dy(8.0).build();
+		for (int i=0; i<8; ++i) {
+			lander.clockTick(1.0);
+		}
+		Position position = lander.getPosition();
+		// We moved at a steady 8 m/s in the X direction
+		assertEquals(64.0, position.getX());
 		
+		// In the Y direction, we moved 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 m
+		assertEquals(36.0, position.getY());
+		Velocity velocity = lander.getVelocity();
+		assertEquals(8.0, velocity.getDx());
+		assertEquals(0.0, velocity.getDy());		
+	}
+
+	@Test
+	void testParabolicTrajectory16() {
+		Lander lander = new Lander.Builder().y(0.0).x(0.0).dx(8.0).dy(8.0).build();
+		for (int i=0; i<16; ++i) {
+			lander.clockTick(1.0);
+		}
+		Position position = lander.getPosition();
+		// We moved at a steady 8 m/s in the X direction
+		assertEquals(128.0, position.getX());
+		
+		assertEquals(8.0, position.getY());
+		Velocity velocity = lander.getVelocity();
+		assertEquals(8.0, velocity.getDx());
+		assertEquals(-8.0, velocity.getDy());
+	}
+	@Test
+	void testParabolicTrajectory17() {
+		Lander lander = new Lander.Builder().y(0.0).x(0.0).dx(8.0).dy(8.0).build();
+		for (int i=0; i<17; ++i) {
+			lander.clockTick(1.0);
+		}
+		Position position = lander.getPosition();
+		assertEquals(0.0, position.getY());
 	}
 }

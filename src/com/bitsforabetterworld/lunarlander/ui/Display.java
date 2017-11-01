@@ -24,7 +24,7 @@ public class Display {
 	private long m_lastPaintNanos = 0;
 	// the nose of the lander is at (0, 48)
 	int[] xPoints = { 0, 16, 16, 32, 24, 16, -16, -24, -32, -16, -16 };
-	int[] yPoints = { 48, 32, 16, 0, 0, 8, 8, 0, 0, 16, 32 };
+	int[] yPoints = { 0, 8, 16, 48, 48, 32, 32, 48, 48, 16, 8 };
 	private final Polygon landerPolygon = new Polygon(xPoints, yPoints, xPoints.length);
 	public Display(Lander lander) {
 		m_lander = lander;

@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -76,6 +78,30 @@ public class Display {
    public void createAndShowGUI() throws IOException {
        //Create and set up the window.
        final JFrame frame = new JFrame("Lunar Lander");
+     frame.addKeyListener(new KeyListener() {
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyChar() == ' ') {
+				m_lander.turnOnThruster();
+			}
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			if (e.getKeyChar() == ' ') {
+				m_lander.turnOffThruster();
+			}			
+		}
+    	 
+     });
        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        final JPanel panel = new JPanel() {
     	   private static final long serialVersionUID = -5750610174709683930L;

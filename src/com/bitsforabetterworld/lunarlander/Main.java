@@ -33,8 +33,12 @@ public class Main {
 		Object waiter = new Object();
 		try {
 			while (true) {
-				Thread.sleep(200L);
-				display.update();
+				Thread.sleep(60L);
+				SwingUtilities.invokeLater(new Runnable() {
+		            public void run() {
+		            display.update();	
+		         }
+				});
 			}
 		}
 		catch (InterruptedException ex) {

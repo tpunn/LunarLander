@@ -21,7 +21,6 @@ public class Display {
 		
 	private static final int LANDING_PAD_WIDTH = 80;
 	private final Lander m_lander;
-	private RepaintManager repaintManager = null;
 	private JPanel m_panel = null;
 	
 	private long m_lastPaintNanos = 0;
@@ -34,11 +33,10 @@ public class Display {
 	}
 	
 	public void update() {
-		if (repaintManager != null) {
-			if (m_panel != null) {
-				repaintManager.markCompletelyDirty(m_panel);
-				repaintManager.paintDirtyRegions();
-			}
+		if (m_panel != null) {
+			RepaintManager repaintManager = RepaintManager.currentManager(m_panel);
+			repaintManager.markCompletelyDirty(m_panel);
+			repaintManager.paintDirtyRegions();
 		}
 	}
 	public void paintScene(Graphics g) {
@@ -95,7 +93,6 @@ public class Display {
        //Display the window.
        frame.pack();
        frame.setVisible(true);
-       repaintManager = RepaintManager.currentManager(panel);
        m_panel = panel;
    }
 }

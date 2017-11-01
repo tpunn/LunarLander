@@ -74,7 +74,6 @@ public class Lander {
 	
 	public void clockTick(double dt) {
 		// With apologies to Isaac Newton.
-		System.out.println("DT: "+dt);
 		// Let's update position and rotation according to their velocities
 		m_x += m_dx * dt;
 		m_y += m_dy * dt;

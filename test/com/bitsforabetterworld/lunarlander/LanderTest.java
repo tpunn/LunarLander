@@ -37,59 +37,60 @@ class LanderTest {
 	
 	@Test
 	void testFreeFallin() {
-		// all the vampires walkin' throught the Valley
-		// move west down Ventura Boulevard
+		// All the vampires walkin' throught the Valley
+		// Move west down Ventura Boulevard
+		// --Tom Petty
 		Lander lander = new Lander.Builder().y(100.0).build();
 		lander.clockTick(1.0);
 		Position position = lander.getPosition();
 		Velocity velocity = lander.getVelocity();
-		assertEquals(Lander.GravityAcceleration, velocity.getDy());
+		assertEquals(1.0 * Lander.GravityAcceleration, velocity.getDy());
 		assertEquals(0.0, velocity.getDx());
 		assertEquals(0.0, velocity.getDtheta());
-		// Position hasn't changed yet!
+		// Position hasn't changed yet, because velocity was 0 at the start of this tick
 		assertEquals(100.0, position.getY());
 	}
 	
 	@Test
 	void testFreeFallin2() {
 		Lander lander = new Lander.Builder().y(100.0).build();
-		lander.clockTick(1.0);
-		lander.clockTick(1.0);
+		for (int i=0; i < 2; ++i) {
+			lander.clockTick(1.0);
+		}
 		Position position = lander.getPosition();
 		Velocity velocity = lander.getVelocity();
 		assertEquals(2.0 * Lander.GravityAcceleration, velocity.getDy());
-		// Position hasn't changed yet!
+		// Position has changed by 0 + 1
 		assertEquals(99.0, position.getY());		
 	}
 
 	@Test
 	void testFreeFallin4() {
 		Lander lander = new Lander.Builder().y(100.0).build();
-		lander.clockTick(1.0);
-		lander.clockTick(1.0);
-		lander.clockTick(1.0);
-		lander.clockTick(1.0);
+		for (int i=0; i < 4; ++i) {
+			lander.clockTick(1.0);
+		}
 		Position position = lander.getPosition();
 		Velocity velocity = lander.getVelocity();
 		assertEquals(4.0 * Lander.GravityAcceleration, velocity.getDy());
-		// Position hasn't changed yet!
+		// Position has changed by 0 + 1 + 2 + 3
 		assertEquals(94.0, position.getY());		
 	}
 	@Test
 	void testFreeFallin8() {
 		Lander lander = new Lander.Builder().y(100.0).build();
-		lander.clockTick(1.0);
-		lander.clockTick(1.0);
-		lander.clockTick(1.0);
-		lander.clockTick(1.0);
-		lander.clockTick(1.0);
-		lander.clockTick(1.0);
-		lander.clockTick(1.0);
-		lander.clockTick(1.0);
+		for (int i=0; i < 8; ++i) {
+			lander.clockTick(1.0);
+		}
 		Position position = lander.getPosition();
 		Velocity velocity = lander.getVelocity();
 		assertEquals(8.0 * Lander.GravityAcceleration, velocity.getDy());
-		// Position hasn't changed yet!
-		assertEquals(72.0, position.getY());		
+		// Position has changed by 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7
+		assertEquals(72.0, position.getY());
+	}
+	
+	@Test
+	void testThrustOn() {
+		
 	}
 }

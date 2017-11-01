@@ -2,7 +2,7 @@ package com.bitsforabetterworld.lunarlander;
 
 public class Lander {
 	
-	public static final double ThrusterAcceleration = 1.0; // meters/second^2
+	public static final double ThrusterAcceleration = 10.0; // meters/second^2
 	public static final double RotationMotorAcceleration = 1.0; // radians/second
 	public static final double GravityAcceleration = -1.0; // meters/second^2
 	public enum RotationDirection {

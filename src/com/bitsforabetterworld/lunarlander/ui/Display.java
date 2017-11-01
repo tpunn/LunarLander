@@ -1,10 +1,12 @@
 package com.bitsforabetterworld.lunarlander.ui;
+import com.bitsforabetterworld.lunarlander.Position;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -29,8 +31,18 @@ public class Display {
 		g2.setColor(Color.YELLOW);
 		g2.fillRect((rect.width - LANDING_PAD_WIDTH) / 2, surfaceY, LANDING_PAD_WIDTH, rect.height/100);
 		g2.setColor(Color.PINK);
-		g2.rotate(0.4);
-		g2.drawImage(bufferedImage, 400, 400, null);
+		double theta = 0.0;
+		double x = 200.0;
+		double y = 0.0;
+//		AffineTransform scaleTransform = AffineTransform.getScaleInstance(rect.width / Position.WIDTH_OF_SCREEN, rect.height/Position.TOP_OF_SCREEN);
+		AffineTransform scaleTransform = AffineTransform.getScaleInstance(0.1, 0.1);
+		AffineTransform rotationTransform = AffineTransform.getRotateInstance(theta);
+		AffineTransform translateTransform = AffineTransform.getTranslateInstance(x, y);
+		AffineTransform affineTransform = new AffineTransform();
+		affineTransform.concatenate(translateTransform);
+		affineTransform.concatenate(rotationTransform);
+		affineTransform.concatenate(scaleTransform);
+		g2.drawImage(bufferedImage, affineTransform, null);
 	}
 	
    public void createAndShowGUI() throws IOException {

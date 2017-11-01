@@ -7,15 +7,17 @@ package com.bitsforabetterworld.lunarlander;
  * @author cpdupuis@gmail.com
  *
  */
-class Position {
+public class Position {
 	public static final double TOP_OF_SCREEN = 1000.0; // meters
 	public static final double WIDTH_OF_SCREEN = 1500.0; // meters
 	private final double x;
 	private final double y;
+	private final double theta;
 	
-	public Position(double x, double y) {
+	public Position(double x, double y, double theta) {
 		this.x = x;
 		this.y = y;
+		this.theta = theta;
 	}
 	
 	public double getX() {
@@ -24,5 +26,9 @@ class Position {
 	
 	public double getY() {
 		return y;
+	}
+	
+	public double getTheta() {
+		return theta;
 	}
 }

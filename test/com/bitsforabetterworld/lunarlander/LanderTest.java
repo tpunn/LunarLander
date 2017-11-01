@@ -125,4 +125,38 @@ class LanderTest {
 		Position position = lander.getPosition();
 		assertEquals(0.0, position.getY());
 	}
+	
+	@Test
+	void testThrustVertical()
+	{
+		Lander lander = new Lander.Builder().x(0.0).y(100.0).dx(0.0).dy(-10.0).thrusterAcceleration(10.0).build();
+		lander.turnOnThruster();
+		lander.clockTick(1.0);
+		Velocity velocity = lander.getVelocity();
+		assertEquals(0.0, velocity.getDx());
+		// The thruster counteracted the initial velocity of -10.0 m/s, but gravity accelerates us downwards
+		assertEquals(-1.0, velocity.getDy());
+	}
+	
+	@Test
+	void testThrustHorizontalRight() {
+		Lander lander = new Lander.Builder().x(0.0).y(100.0).theta(Math.PI/2.0).dx(0.0).dy(0.0).thrusterAcceleration(10.0).build();
+		lander.turnOnThruster();
+		lander.clockTick(1.0);
+		Velocity velocity = lander.getVelocity();
+		assertEquals(10.0, velocity.getDx());
+		// The thruster counteracted the initial velocity of -10.0 m/s, but gravity accelerates us downwards
+		assertEquals(-1.0, velocity.getDy(), 0.00001 /*delta*/);		
+	}
+	
+	@Test
+	void testThrustHorizontalLeft() {
+		Lander lander = new Lander.Builder().x(0.0).y(100.0).theta(-Math.PI/2.0).dx(0.0).dy(0.0).thrusterAcceleration(10.0).build();
+		lander.turnOnThruster();
+		lander.clockTick(1.0);
+		Velocity velocity = lander.getVelocity();
+		assertEquals(-10.0, velocity.getDx());
+		// The thruster counteracted the initial velocity of -10.0 m/s, but gravity accelerates us downwards
+		assertEquals(-1.0, velocity.getDy(), 0.00001 /*delta*/);		
+	}
 }

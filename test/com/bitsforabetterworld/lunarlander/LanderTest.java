@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 class LanderTest {
 	@Test
 	void testPosition() {
-		Lander lander = new Lander.Builder().x(32.3).y(62.6).theta(11.1).build();
+		Lander lander = new Lander.Builder().x(32.3).y(62.6).theta(6.1).build();
 		Position position = lander.getPosition();
 		assertEquals(32.3, position.getX());
 		assertEquals(62.6, position.getY());
-		assertEquals(11.1, position.getTheta());
+		assertEquals(6.1, position.getTheta());
 	}
 	
 	@Test
@@ -158,5 +158,32 @@ class LanderTest {
 		assertEquals(-10.0, velocity.getDx());
 		// The thruster counteracted the initial velocity of -10.0 m/s, but gravity accelerates us downwards
 		assertEquals(-1.0, velocity.getDy(), 0.00001 /*delta*/);		
+	}
+	
+	@Test
+	void testRotation1() {
+		Lander lander = new Lander.Builder().x(0.0).y(100.0).theta(0.0).dtheta(1.0).build();
+		lander.clockTick(1.0);
+		Position position = lander.getPosition();
+		assertEquals(1.0, position.getTheta());
+	}
+	
+	@Test 
+	void testRotationFullCircle() {
+		Lander lander = new Lander.Builder().x(0.0).y(100.0).theta(0.0).dtheta(Math.PI).build();
+		lander.clockTick(1.0);
+		lander.clockTick(1.0);
+		Position position = lander.getPosition();
+		assertEquals(0.0, position.getTheta());
+		
+	}
+	@Test 
+	void testRotationFullCircleBackwards() {
+		Lander lander = new Lander.Builder().x(0.0).y(100.0).theta(0.0).dtheta(-Math.PI).build();
+		lander.clockTick(1.0);
+		lander.clockTick(1.0);
+		Position position = lander.getPosition();
+		assertEquals(0.0, position.getTheta(), 0.000001 /*delta*/);
+		
 	}
 }

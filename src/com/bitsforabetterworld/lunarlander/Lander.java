@@ -4,7 +4,7 @@ public class Lander {
 	
 	public static final double RotationMotorAcceleration = 1.0; // radians/second
 	public static final double GravityAcceleration = -1.0; // meters/second^2
-
+	
 	public enum RotationDirection {
 		Clockwise,
 		CounterClockwise
@@ -45,7 +45,7 @@ public class Lander {
 		this.m_y = builder.m_y;
 		this.m_dx = builder.m_dx;
 		this.m_dy = builder.m_dy;
-		this.m_theta = builder.m_theta;
+		this.m_theta = builder.m_theta % (2.0 * Math.PI);
 		this.m_dtheta = builder.m_dtheta;
 		this.m_thrusterAcceleration = builder.m_thrusterAcceleration;
 	}
@@ -78,7 +78,7 @@ public class Lander {
 		// Let's update position and rotation according to their velocities
 		m_x += m_dx * dt;
 		m_y += m_dy * dt;
-		m_theta += m_dtheta * dt;
+		m_theta = (m_theta + m_dtheta * dt) % (2.0 * Math.PI);
 		
 		// And let's apply gravity
 		m_dy += GravityAcceleration * dt;

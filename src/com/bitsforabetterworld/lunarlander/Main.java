@@ -16,7 +16,8 @@ public class Main {
 	}
 	
 	public static void main(String[] args) {
-		final Display display = new Display();
+		final Lander lander = new Lander.Builder().x(0.0).y(100.0).thrusterAcceleration(10.0).build();
+		final Display display = new Display(lander);
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	try {

@@ -4,6 +4,7 @@ import com.bitsforabetterworld.lunarlander.Lander.RotationDirection;
 import com.bitsforabetterworld.lunarlander.Position;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -48,6 +49,23 @@ public class Display {
 		if (m_lastPaintNanos != 0 && m_lastPaintNanos < now) {
 			double dtSeconds = ((double)(now - m_lastPaintNanos)) / 1000000000.0;
 			m_lander.clockTick(dtSeconds);
+		}
+		if (m_lander.isCrashed())
+		{
+			g2.setColor(Color.RED);
+			Font font = g2.getFont();
+			Font bigFont = font.deriveFont(Font.BOLD, 96.0f);
+			g2.setFont(bigFont);
+			g2.drawString("CRASHED", 100, 200);
+			return;
+		}
+		else if (m_lander.isLanded()) {
+			g2.setColor(Color.GREEN);
+			Font font = g2.getFont();
+			Font bigFont = font.deriveFont(Font.BOLD, 96.0f);
+			g2.setFont(bigFont);
+			g2.drawString("LANDED", 100, 200);
+			return;
 		}
 		m_lastPaintNanos = now;
 		Rectangle windowRect = g2.getDeviceConfiguration().getBounds();

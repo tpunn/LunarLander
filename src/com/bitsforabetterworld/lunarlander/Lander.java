@@ -76,6 +76,10 @@ public class Lander {
 		return m_isLanded;
 	}
 	
+	public boolean isCrashed() {
+		return m_isCrashed;
+	}
+	
 	public void clockTick(double dt) {
 		// With apologies to Isaac Newton.
 		// Let's update position and rotation according to their velocities
@@ -88,6 +92,15 @@ public class Lander {
 		
 		if (m_y <= 0) {
 			m_isLanded = true;
+			if ((Math.abs(m_dx) > 2.0) || (Math.abs(m_dy) > 2.0)) {
+				// too much speed at landing
+				m_isCrashed = true;
+			}
+			if (Math.abs(m_theta) > 0.2) {
+				// too steep an angle at landing
+				m_isCrashed = true;
+			}
+				
 		}
 		// And let's apply gravity
 		m_dy += GravityAcceleration * dt;

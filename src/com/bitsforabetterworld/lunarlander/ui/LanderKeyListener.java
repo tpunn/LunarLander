@@ -3,6 +3,8 @@ package com.bitsforabetterworld.lunarlander.ui;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import com.bitsforabetterworld.lunarlander.LanderLevel;
+
 public class LanderKeyListener implements KeyListener {
 	public enum RotationDirection {
 		Clockwise,
@@ -47,7 +49,11 @@ public class LanderKeyListener implements KeyListener {
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// Nothing to do here.
+		switch (e.getKeyChar()) {
+		case 'n':
+			LanderLevel.nextLevel();
+			break;
+		}
 	}
 
 	@Override

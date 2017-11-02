@@ -14,24 +14,21 @@ public class LanderLevel {
 	private static Display display;
 	private static Control control;
 	private static Lander lander;
+	private static int level = 0;
 	
 	public static void main(String[] args) {
 		setupDisplay();
-		startLevel(0);
+		nextLevel();
+		runLoop();
 	}
 
-	public static void startLevel(int whichLevel) {
-		lander = new Lander.Builder()
-				.x(750.0)
-				.y(900.0)
-				.thrusterAcceleration(4.0)
-				.gravityAcceleration(-1.0)
-				.fuel(10.0)
-				.build();
-		display.setLander(lander);
+	
+	
+	public static void runLoop() {
+		
 		try {
 			long lastUpdateNanos = System.nanoTime();
-			while (!lander.isLanded()) {
+			while (lander != null && !lander.isLanded()) {
 				Thread.sleep(60L);
         		long now = System.nanoTime();
         		if (lastUpdateNanos < now) {
@@ -52,6 +49,18 @@ public class LanderLevel {
 			System.err.println("Interrupted");
 		}
 		
+	}
+
+	public synchronized static void nextLevel() {
+		++level;
+		lander = new Lander.Builder()
+				.x(750.0)
+				.y(900.0)
+				.thrusterAcceleration(4.0)
+				.gravityAcceleration(-1.0)
+				.fuel(10.0)
+				.build();
+		display.setLander(lander);
 	}
 	
 	public static void setupDisplay() {

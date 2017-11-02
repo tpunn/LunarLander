@@ -19,6 +19,7 @@ public class Main {
 		final Display display = new Display(lander);
 		final LanderKeyListener landerKeyListener = new LanderKeyListener();
 		final Control control = new TeleopControl(landerKeyListener);
+		final Control autonomousControl = new AutonomousControl();
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	try {

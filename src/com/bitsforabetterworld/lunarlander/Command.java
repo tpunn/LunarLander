@@ -17,5 +17,4 @@ enum Command {
 	Thrust,
 	RollClockwise,
 	RollCounterclockwise,
-	DeployLandingGear
 }

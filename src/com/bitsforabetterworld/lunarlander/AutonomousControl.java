@@ -16,7 +16,7 @@ public class AutonomousControl implements Control {
 		// The goal is to have a successful landing, which means that your lander gets to a Y position of 0
 		// with the following requirements:
 		//
-		// - Vertical velocity (dy) less than 8 m/s
+		// - Vertical velocity (dy) less than -8 m/s
 		// - Horizontal velocity (dx) between -5 and 5 m/s
 		// - Angle (theta) between -0.3 and 0.3 radians
 		// - Change in angle (dtheta) between -0.2 and 0.2 radians/second

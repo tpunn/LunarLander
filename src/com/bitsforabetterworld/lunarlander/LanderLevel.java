@@ -7,7 +7,10 @@ import javax.swing.SwingUtilities;
 import com.bitsforabetterworld.lunarlander.ui.Display;
 import com.bitsforabetterworld.lunarlander.ui.LanderKeyListener;
 
-public class Main {
+// TODO: Add fuel consumption
+// TODO: Make multiple levels
+// TODO: Points for fuel left, successfully landing on pad
+public class LanderLevel {
 	
 	public static void main(String[] args) {
 		final Lander lander = new Lander.Builder()
@@ -38,7 +41,7 @@ public class Main {
         		long now = System.nanoTime();
         		if (lastUpdateNanos < now) {
         			double dtSeconds = ((double)(now - lastUpdateNanos)) / 1000000000.0;
-        			EnumSet<Command> commands = control.getCommand(lander.getPosition(), lander.getVelocity());
+        			EnumSet<Command> commands = autonomousControl.getCommand(lander.getPosition(), lander.getVelocity());
         			lander.clockTick(dtSeconds, commands);
         		}
         		lastUpdateNanos = now;

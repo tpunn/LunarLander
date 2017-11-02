@@ -8,7 +8,6 @@ import javax.swing.SwingUtilities;
 import com.bitsforabetterworld.lunarlander.ui.Display;
 import com.bitsforabetterworld.lunarlander.ui.LanderKeyListener;
 
-// TODO: Points for fuel left, successfully landing on pad
 public class LanderLevel {
 	
 	private static int score = 0;

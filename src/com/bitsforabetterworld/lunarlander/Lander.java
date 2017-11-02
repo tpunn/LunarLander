@@ -2,6 +2,8 @@ package com.bitsforabetterworld.lunarlander;
 
 import java.util.EnumSet;
 
+import com.bitsforabetterworld.lunarlander.ui.Display;
+
 public class Lander {
 	/* How do you get an instance of Lander?
 	 * First, create a Lander.Builder, and call the various methods like x() and dy() to
@@ -105,7 +107,8 @@ public class Lander {
 			}
 			else {
 				// Safe landing!
-				LanderLevel.reportSuccessfulLanding(m_fuel);
+				double landingPadBonus = (Math.abs(m_x - (Position.WIDTH_OF_SCREEN / 2.0))) < (Display.LANDING_PAD_WIDTH / 2) ? 100.0 : 0.0;
+				LanderLevel.reportSuccessfulLanding(m_fuel + landingPadBonus);
 			}
 		}
 		// And let's apply gravity

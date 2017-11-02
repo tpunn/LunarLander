@@ -22,7 +22,7 @@ import com.bitsforabetterworld.lunarlander.Velocity;
 
 public class Display {
 		
-	private static final int LANDING_PAD_WIDTH = 80;
+	public static final int LANDING_PAD_WIDTH = 80;
 	private Lander m_lander;
 	private JPanel m_panel = null;
 

@@ -22,7 +22,13 @@ import com.bitsforabetterworld.lunarlander.Position;
 
 public class Display {
 		
-	private class TeleopLanderKeyListener implements KeyListener {
+	public static class LanderKeyListener implements KeyListener {
+		
+		private Lander m_lander;
+
+		public LanderKeyListener(Lander lander) {
+			m_lander = lander;
+		}
 		@Override
 		public void keyTyped(KeyEvent e) {
 			// Nothing to do here.
@@ -124,10 +130,12 @@ public class Display {
 		g2.fillPolygon(landerPolygon);
 	}
 	
-   public void createAndShowGUI() throws IOException {
+   public void createAndShowGUI(KeyListener keyListener) throws IOException {
        //Create and set up the window.
        final JFrame frame = new JFrame("Lunar Lander");
-       frame.addKeyListener(new TeleopLanderKeyListener());
+       if (keyListener != null) {
+    	   frame.addKeyListener(keyListener);
+       }
        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        final JPanel panel = new JPanel() {
     	   private static final long serialVersionUID = -5750610174709683930L;

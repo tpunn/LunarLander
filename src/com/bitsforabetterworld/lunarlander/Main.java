@@ -21,7 +21,7 @@ public class Main {
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	try {
-            		display.createAndShowGUI();
+            		display.createAndShowGUI(new Display.LanderKeyListener(lander));
             	}
             	catch (IOException exp) {
             		System.err.println("Exception: "+exp);

@@ -13,7 +13,16 @@ with the following requirements:
 
 Then, try your hand at programming the autonomous mode!
 
-Fill in code in AutonomousControl.java to decide if we should thrust (by setting thrustCommand = Command.Thrust) or
+In LanderLevel.main, change this:
+
+	setupDisplayAndControls(false);
+
+to this:
+	
+	setupDisplayAndControls(true);
+	
+
+Then fill in code in AutonomousControl.java to decide if we should thrust (by setting thrustCommand = Command.Thrust) or
 turn on the rotation motors (by settings rotateCommand = Command.RollClockwise 
 or Command.RollCounterclockwise)
 

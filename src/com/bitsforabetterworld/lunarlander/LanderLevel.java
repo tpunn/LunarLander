@@ -16,8 +16,9 @@ public class LanderLevel {
 	private static Lander lander;
 	private static int level = 0;
 	private static final SecureRandom rand = new SecureRandom();
+	
 	public static void main(String[] args) {
-		setupDisplay();
+		setupDisplayAndControls(false);
 		nextLevel();
 		runLoop();
 	}
@@ -76,13 +77,18 @@ public class LanderLevel {
 		display.setLander(lander);
 	}
 	
-	public static void setupDisplay() {
+	public static void setupDisplayAndControls(boolean useAutonomousMode) {
 		
 		display = new Display();
 		final LanderKeyListener landerKeyListener = new LanderKeyListener();
 		final Control teleopControl = new TeleopControl(landerKeyListener);
 		final Control autonomousControl = new AutonomousControl();
-		control = teleopControl;
+		if (useAutonomousMode) {
+			control = autonomousControl;
+		}
+		else {
+			control = teleopControl;
+		}
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	try {

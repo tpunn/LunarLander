@@ -22,6 +22,7 @@ public class Lander {
 		public Builder thrusterAcceleration(double accel) { this.m_thrusterAcceleration = accel; return this; }
 		public Builder rotationMotorAcceleration(double accel) { this.m_thrusterAcceleration = accel; return this; }
 		public Builder gravityAcceleration(double grav) { this.m_gravityAcceleration = grav; return this; }
+		public Builder fuel(double fuel) { this.m_fuel = fuel; return this; }
 		double m_x = 0.0;
 		double m_y = 0.0;
 		double m_dx = 0.0;
@@ -31,6 +32,7 @@ public class Lander {
 		double m_thrusterAcceleration = 10.0;
 		double m_rotationMotorAcceleration = 0.7;
 		double m_gravityAcceleration = -1.0;
+		double m_fuel = 100000.0;
 	}
 	
 	/**
@@ -47,6 +49,7 @@ public class Lander {
 		this.m_thrusterAcceleration = builder.m_thrusterAcceleration;
 		this.m_rotationMotorAcceleration = builder.m_rotationMotorAcceleration;
 		this.m_gravityAcceleration = builder.m_gravityAcceleration;	
+		this.m_fuel = builder.m_fuel;
 	}
 	
 	public Position getPosition()
@@ -56,6 +59,10 @@ public class Lander {
 
 	public Velocity getVelocity() {
 		return new Velocity(m_dx, m_dy, m_dtheta);
+	}
+	
+	public double getFuelRemaining() {
+		return m_fuel;
 	}
 	
 	public boolean isLanded() {
@@ -79,7 +86,10 @@ public class Lander {
 		m_x = (m_x + m_dx * dt) % Position.WIDTH_OF_SCREEN;
 		m_y += m_dy * dt;
 		m_theta = (m_theta + m_dtheta * dt) % (2.0 * Math.PI);
-		
+
+		if (m_fuel < 0.0) {
+			m_fuel = 0.0;
+		}
 		if (m_y <= 0) {
 			m_isLanded = true;
 			if ((Math.abs(m_dx) > 5.0) || (Math.abs(m_dy) > 8.0)) {
@@ -98,9 +108,10 @@ public class Lander {
 		m_dy += m_gravityAcceleration * dt;
 		
 		// And account for our engines!
-		if (commands.contains(Command.Thrust)) {
+		if (commands.contains(Command.Thrust) && m_fuel > 0.0) {
 			m_dx += m_thrusterAcceleration * dt * Math.sin(m_theta);
 			m_dy += m_thrusterAcceleration * dt * Math.cos(m_theta);
+			m_fuel -= dt;
 		}
 
 		if (commands.contains(Command.RollClockwise)) {
@@ -135,6 +146,9 @@ public class Lander {
 	
 	// Has the lander landed yet?
 	private boolean m_isLanded = false;
+	
+	// How much fuel (which is burned at a rate of 1 unit/second while thrusting) is left?
+	private double m_fuel;
 	
 	// How much thrust does the thruster give when it's on? In meters/second**2
 	private final double m_thrusterAcceleration;

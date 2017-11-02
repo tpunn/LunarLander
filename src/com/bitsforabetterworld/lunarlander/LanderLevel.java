@@ -18,6 +18,7 @@ public class LanderLevel {
 				.y(900.0)
 				.thrusterAcceleration(4.0)
 				.gravityAcceleration(-1.0)
+				.fuel(10.0)
 				.build();
 		final Display display = new Display(lander);
 		final LanderKeyListener landerKeyListener = new LanderKeyListener();

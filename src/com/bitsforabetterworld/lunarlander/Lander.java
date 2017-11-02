@@ -1,12 +1,8 @@
 package com.bitsforabetterworld.lunarlander;
 
+import java.util.EnumSet;
+
 public class Lander {
-		
-	public enum RotationDirection {
-		Clockwise,
-		CounterClockwise
-	}
-	
 	/* How do you get an instance of Lander?
 	 * First, create a Lander.Builder, and call the various methods like x() and dy() to
 	 * set the desired construction parameters.
@@ -50,9 +46,9 @@ public class Lander {
 		this.m_dtheta = builder.m_dtheta;
 		this.m_thrusterAcceleration = builder.m_thrusterAcceleration;
 		this.m_rotationMotorAcceleration = builder.m_rotationMotorAcceleration;
-		this.m_gravityAcceleration = builder.m_gravityAcceleration;
-		
+		this.m_gravityAcceleration = builder.m_gravityAcceleration;	
 	}
+	
 	public Position getPosition()
 	{
 		return new Position(m_x, m_y, m_theta);
@@ -60,20 +56,6 @@ public class Lander {
 
 	public Velocity getVelocity() {
 		return new Velocity(m_dx, m_dy, m_dtheta);
-	}
-	public void turnOnThruster() {
-		m_isThrusterOn = true;
-	}
-	public void turnOffThruster() {
-		m_isThrusterOn = false;
-	}
-	
-	public void turnOnRotationMotor(RotationDirection rotationDirection) {
-		m_rotationMotorDirection = rotationDirection;
-		m_isRotationMotorOn = true;
-	}
-	public void turnOffRotationMotor() {
-		m_isRotationMotorOn = false;
 	}
 	
 	public boolean isLanded() {
@@ -88,7 +70,7 @@ public class Lander {
 		return m_gravityAcceleration;
 	}
 	
-	public void clockTick(double dt) {
+	public void clockTick(double dt, EnumSet<Command> commands) {
 		// With apologies to Isaac Newton.
 		// Let's update position and rotation according to their velocities
 		if (m_isLanded) {
@@ -114,21 +96,19 @@ public class Lander {
 		m_dy += m_gravityAcceleration * dt;
 		
 		// And account for our engines!
-		if (m_isThrusterOn) {
+		if (commands.contains(Command.Thrust)) {
 			m_dx += m_thrusterAcceleration * dt * Math.sin(m_theta);
 			m_dy += m_thrusterAcceleration * dt * Math.cos(m_theta);
 		}
-		
-		if (m_isRotationMotorOn) {
-			if (m_rotationMotorDirection == RotationDirection.Clockwise) {
-				m_dtheta += m_rotationMotorAcceleration * dt;
-			}
-			else {
-				m_dtheta -= m_rotationMotorAcceleration * dt;
-			}
+
+		if (commands.contains(Command.RollClockwise)) {
+			m_dtheta += m_rotationMotorAcceleration * dt;
 		}
-		
-	}
+		if (commands.contains(Command.RollCounterclockwise)) {
+			m_dtheta -= m_rotationMotorAcceleration * dt;
+		}
+	}		
+	
 	
 	// Current position along the X axis, in meters
 	private double m_x;
@@ -153,14 +133,6 @@ public class Lander {
 	
 	// Has the lander landed yet?
 	private boolean m_isLanded = false;
-
-	// Is the thruster currently on?
-	private boolean m_isThrusterOn = false;
-	
-	// Is the rotational motor currently on?
-	private boolean m_isRotationMotorOn = false;
-	
-	private RotationDirection m_rotationMotorDirection = RotationDirection.Clockwise;
 	
 	// How much thrust does the thruster give when it's on? In meters/second**2
 	private final double m_thrusterAcceleration;

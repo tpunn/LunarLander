@@ -2,6 +2,8 @@ package com.bitsforabetterworld.lunarlander;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.EnumSet;
+
 import org.junit.jupiter.api.Test;
 
 class LanderTest {
@@ -20,7 +22,7 @@ class LanderTest {
 		// Move west down Ventura Boulevard
 		// --Tom Petty
 		Lander lander = new Lander.Builder().y(100.0).build();
-		lander.clockTick(1.0);
+		lander.clockTick(1.0, EnumSet.noneOf(Command.class));
 		Position position = lander.getPosition();
 		Velocity velocity = lander.getVelocity();
 		assertEquals(1.0 * lander.getGravityAcceleration(), velocity.getDy());
@@ -34,7 +36,7 @@ class LanderTest {
 	void testFreeFallin2() {
 		Lander lander = new Lander.Builder().y(100.0).build();
 		for (int i=0; i < 2; ++i) {
-			lander.clockTick(1.0);
+			lander.clockTick(1.0, EnumSet.noneOf(Command.class));
 		}
 		Position position = lander.getPosition();
 		Velocity velocity = lander.getVelocity();
@@ -47,7 +49,7 @@ class LanderTest {
 	void testFreeFallin4() {
 		Lander lander = new Lander.Builder().y(100.0).build();
 		for (int i=0; i < 4; ++i) {
-			lander.clockTick(1.0);
+			lander.clockTick(1.0, EnumSet.noneOf(Command.class));
 		}
 		Position position = lander.getPosition();
 		Velocity velocity = lander.getVelocity();
@@ -59,7 +61,7 @@ class LanderTest {
 	void testFreeFallin8() {
 		Lander lander = new Lander.Builder().y(100.0).build();
 		for (int i=0; i < 8; ++i) {
-			lander.clockTick(1.0);
+			lander.clockTick(1.0, EnumSet.noneOf(Command.class));
 		}
 		Position position = lander.getPosition();
 		Velocity velocity = lander.getVelocity();
@@ -71,7 +73,7 @@ class LanderTest {
 	@Test
 	void testParabolicTrajectory1() {
 		Lander lander = new Lander.Builder().y(0.0).x(0.0).dx(8.0).dy(8.0).build();
-		lander.clockTick(1.0);
+		lander.clockTick(1.0, EnumSet.noneOf(Command.class));
 		Position position = lander.getPosition();
 		assertEquals(8.0, position.getX());
 		assertEquals(8.0, position.getY());
@@ -84,7 +86,7 @@ class LanderTest {
 	void testParabolicTrajectory8() {
 		Lander lander = new Lander.Builder().y(0.0).x(0.0).dx(8.0).dy(8.0).build();
 		for (int i=0; i<8; ++i) {
-			lander.clockTick(1.0);
+			lander.clockTick(1.0, EnumSet.noneOf(Command.class));
 		}
 		Position position = lander.getPosition();
 		// We moved at a steady 8 m/s in the X direction
@@ -101,7 +103,7 @@ class LanderTest {
 	void testParabolicTrajectory16() {
 		Lander lander = new Lander.Builder().y(0.0).x(0.0).dx(8.0).dy(8.0).build();
 		for (int i=0; i<16; ++i) {
-			lander.clockTick(1.0);
+			lander.clockTick(1.0, EnumSet.noneOf(Command.class));
 		}
 		Position position = lander.getPosition();
 		// We moved at a steady 8 m/s in the X direction
@@ -116,7 +118,7 @@ class LanderTest {
 	void testParabolicTrajectory17() {
 		Lander lander = new Lander.Builder().y(0.0).x(0.0).dx(8.0).dy(8.0).build();
 		for (int i=0; i<17; ++i) {
-			lander.clockTick(1.0);
+			lander.clockTick(1.0, EnumSet.noneOf(Command.class));
 		}
 		Position position = lander.getPosition();
 		assertEquals(0.0, position.getY());
@@ -126,8 +128,7 @@ class LanderTest {
 	void testThrustVertical()
 	{
 		Lander lander = new Lander.Builder().x(0.0).y(100.0).dx(0.0).dy(-10.0).thrusterAcceleration(10.0).build();
-		lander.turnOnThruster();
-		lander.clockTick(1.0);
+		lander.clockTick(1.0, EnumSet.of(Command.Thrust));
 		Velocity velocity = lander.getVelocity();
 		assertEquals(0.0, velocity.getDx());
 		// The thruster counteracted the initial velocity of -10.0 m/s, but gravity accelerates us downwards
@@ -137,8 +138,7 @@ class LanderTest {
 	@Test
 	void testThrustHorizontalRight() {
 		Lander lander = new Lander.Builder().x(0.0).y(100.0).theta(Math.PI/2.0).dx(0.0).dy(0.0).thrusterAcceleration(10.0).build();
-		lander.turnOnThruster();
-		lander.clockTick(1.0);
+		lander.clockTick(1.0, EnumSet.of(Command.Thrust));
 		Velocity velocity = lander.getVelocity();
 		assertEquals(10.0, velocity.getDx());
 		// The thruster counteracted the initial velocity of -10.0 m/s, but gravity accelerates us downwards
@@ -148,8 +148,7 @@ class LanderTest {
 	@Test
 	void testThrustHorizontalLeft() {
 		Lander lander = new Lander.Builder().x(0.0).y(100.0).theta(-Math.PI/2.0).dx(0.0).dy(0.0).thrusterAcceleration(10.0).build();
-		lander.turnOnThruster();
-		lander.clockTick(1.0);
+		lander.clockTick(1.0, EnumSet.of(Command.Thrust));
 		Velocity velocity = lander.getVelocity();
 		assertEquals(-10.0, velocity.getDx());
 		// The thruster counteracted the initial velocity of -10.0 m/s, but gravity accelerates us downwards
@@ -159,7 +158,7 @@ class LanderTest {
 	@Test
 	void testRotation1() {
 		Lander lander = new Lander.Builder().x(0.0).y(100.0).theta(0.0).dtheta(1.0).build();
-		lander.clockTick(1.0);
+		lander.clockTick(1.0, EnumSet.noneOf(Command.class));
 		Position position = lander.getPosition();
 		assertEquals(1.0, position.getTheta());
 	}
@@ -167,8 +166,8 @@ class LanderTest {
 	@Test 
 	void testRotationFullCircle() {
 		Lander lander = new Lander.Builder().x(0.0).y(100.0).theta(0.0).dtheta(Math.PI).build();
-		lander.clockTick(1.0);
-		lander.clockTick(1.0);
+		lander.clockTick(1.0, EnumSet.noneOf(Command.class));
+		lander.clockTick(1.0, EnumSet.noneOf(Command.class));
 		Position position = lander.getPosition();
 		assertEquals(0.0, position.getTheta());
 		
@@ -176,8 +175,8 @@ class LanderTest {
 	@Test 
 	void testRotationFullCircleBackwards() {
 		Lander lander = new Lander.Builder().x(0.0).y(100.0).theta(0.0).dtheta(-Math.PI).build();
-		lander.clockTick(1.0);
-		lander.clockTick(1.0);
+		lander.clockTick(1.0, EnumSet.noneOf(Command.class));
+		lander.clockTick(1.0, EnumSet.noneOf(Command.class));
 		Position position = lander.getPosition();
 		assertEquals(0.0, position.getTheta(), 0.000001 /*delta*/);
 	}

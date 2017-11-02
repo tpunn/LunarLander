@@ -1,5 +1,6 @@
 package com.bitsforabetterworld.lunarlander;
 import java.io.IOException;
+import java.util.EnumSet;
 
 import javax.swing.SwingUtilities;
 
@@ -16,10 +17,12 @@ public class Main {
 				.gravityAcceleration(-1.0)
 				.build();
 		final Display display = new Display(lander);
+		final LanderKeyListener landerKeyListener = new LanderKeyListener();
+		final Control control = new TeleopControl(landerKeyListener);
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	try {
-            		display.createAndShowGUI(new LanderKeyListener(lander));
+            		display.createAndShowGUI(landerKeyListener);
             	}
             	catch (IOException exp) {
             		System.err.println("Exception: "+exp);
@@ -34,7 +37,8 @@ public class Main {
         		long now = System.nanoTime();
         		if (lastUpdateNanos < now) {
         			double dtSeconds = ((double)(now - lastUpdateNanos)) / 1000000000.0;
-        			lander.clockTick(dtSeconds);
+        			EnumSet<Command> commands = control.getCommand(lander.getPosition(), lander.getVelocity());
+        			lander.clockTick(dtSeconds, commands);
         		}
         		lastUpdateNanos = now;
 				

@@ -96,12 +96,16 @@ public class Lander {
 				// too much speed at landing
 				m_isCrashed = true;
 			}
-			if (Math.abs(m_theta) > 0.3) {
+			else if (Math.abs(m_theta) > 0.3) {
 				// too steep an angle at landing
 				m_isCrashed = true;
 			}
-			if (Math.abs(m_dtheta) > 0.2) {
+			else if (Math.abs(m_dtheta) > 0.2) {
 				m_isCrashed = true;
+			}
+			else {
+				// Safe landing!
+				LanderLevel.reportSuccessfulLanding(m_fuel);
 			}
 		}
 		// And let's apply gravity

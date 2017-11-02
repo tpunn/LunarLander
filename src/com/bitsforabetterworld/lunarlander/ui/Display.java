@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.RepaintManager;
 
 import com.bitsforabetterworld.lunarlander.Lander;
+import com.bitsforabetterworld.lunarlander.LanderLevel;
 import com.bitsforabetterworld.lunarlander.Position;
 import com.bitsforabetterworld.lunarlander.Velocity;
 
@@ -75,13 +76,15 @@ public class Display {
 	
 	
 	void showStats(Graphics2D g2, Rectangle rect, Position position, Velocity velocity, double fuel) {
-		g2.drawString("x: "+position.getX(), rect.width - 100, 20);
-		g2.drawString("y: "+position.getY(), rect.width - 100, 40);
-		g2.drawString("theta: "+position.getTheta(), rect.width - 100, 60);
-		g2.drawString("dx: "+velocity.getDx(), rect.width - 100, 80);
-		g2.drawString("dy: "+velocity.getDy(), rect.width - 100, 100);
-		g2.drawString("dtheta: "+velocity.getDtheta(), rect.width-100, 120);
-		g2.drawString("fuel: "+fuel, rect.width - 100, 140);
+		int xPos = rect.width - 120;
+		g2.drawString("x: "+position.getX(), xPos, 20);
+		g2.drawString("y: "+position.getY(), xPos, 40);
+		g2.drawString("theta: "+position.getTheta(), xPos, 60);
+		g2.drawString("dx: "+velocity.getDx(), xPos, 80);
+		g2.drawString("dy: "+velocity.getDy(), xPos, 100);
+		g2.drawString("dtheta: "+velocity.getDtheta(), xPos, 120);
+		g2.drawString("fuel: "+fuel, xPos, 140);
+		g2.drawString("SCORE: "+LanderLevel.getScore(), xPos, 160);
 	}
 	
    public void createAndShowGUI(KeyListener keyListener) throws IOException {

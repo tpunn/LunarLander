@@ -8,10 +8,10 @@ import javax.swing.SwingUtilities;
 import com.bitsforabetterworld.lunarlander.ui.Display;
 import com.bitsforabetterworld.lunarlander.ui.LanderKeyListener;
 
-// TODO: Make multiple levels
 // TODO: Points for fuel left, successfully landing on pad
 public class LanderLevel {
 	
+	private static int score = 0;
 	private static Display display;
 	private static Control control;
 	private static Lander lander;
@@ -23,8 +23,13 @@ public class LanderLevel {
 		runLoop();
 	}
 
+	public static synchronized int getScore() {
+		return score;
+	}
 	
-	
+	public static synchronized void reportSuccessfulLanding(double fuelRemaining) {
+		score += (1+level) * (10 + (int)fuelRemaining);
+	}
 	public static void runLoop() {
 		
 		try {

@@ -76,7 +76,7 @@ public class Lander {
 		if (m_isLanded) {
 			return;
 		}
-		m_x += m_dx * dt;
+		m_x = (m_x + m_dx * dt) % Position.WIDTH_OF_SCREEN;
 		m_y += m_dy * dt;
 		m_theta = (m_theta + m_dtheta * dt) % (2.0 * Math.PI);
 		

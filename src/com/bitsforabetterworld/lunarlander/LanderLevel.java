@@ -41,7 +41,7 @@ public class LanderLevel {
         		long now = System.nanoTime();
         		if (lastUpdateNanos < now) {
         			double dtSeconds = ((double)(now - lastUpdateNanos)) / 1000000000.0;
-        			EnumSet<Command> commands = autonomousControl.getCommand(lander.getPosition(), lander.getVelocity());
+        			EnumSet<Command> commands = control.getCommand(lander.getPosition(), lander.getVelocity());
         			lander.clockTick(dtSeconds, commands);
         		}
         		lastUpdateNanos = now;

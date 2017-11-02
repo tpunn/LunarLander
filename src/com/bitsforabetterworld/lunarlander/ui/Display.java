@@ -81,15 +81,14 @@ public class Display {
 		double theta = landerPosition.getTheta();
 		double x = windowRect.getWidth() * landerPosition.getX() / Position.WIDTH_OF_SCREEN ;
 		double y = (0.9 * windowRect.getHeight()) * (Position.TOP_OF_SCREEN - landerPosition.getY()) / Position.TOP_OF_SCREEN;
-//		AffineTransform scaleTransform = AffineTransform.getScaleInstance(rect.width / Position.WIDTH_OF_SCREEN, rect.height/Position.TOP_OF_SCREEN);
-		AffineTransform scaleTransform = AffineTransform.getScaleInstance(1.0, 1.0);
 		AffineTransform rotationTransform = AffineTransform.getRotateInstance(theta);
 		AffineTransform translateTransform = AffineTransform.getTranslateInstance(x, y);
+		Rectangle landerBounds = landerPolygon.getBounds();
+		AffineTransform offsetTransform = AffineTransform.getTranslateInstance(-landerBounds.getCenterX(), -landerBounds.getCenterY());
 		AffineTransform affineTransform = new AffineTransform();
 		affineTransform.concatenate(translateTransform);
 		affineTransform.concatenate(rotationTransform);
-		affineTransform.concatenate(scaleTransform);
-//		g2.drawImage(bufferedImage, affineTransform, null);
+		affineTransform.concatenate(offsetTransform);
 		g2.setTransform(affineTransform);
 		g2.fillPolygon(landerPolygon);
 	}

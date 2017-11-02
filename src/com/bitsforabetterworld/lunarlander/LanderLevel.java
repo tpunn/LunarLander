@@ -1,5 +1,6 @@
 package com.bitsforabetterworld.lunarlander;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.EnumSet;
 
 import javax.swing.SwingUtilities;
@@ -15,7 +16,7 @@ public class LanderLevel {
 	private static Control control;
 	private static Lander lander;
 	private static int level = 0;
-	
+	private static final SecureRandom rand = new SecureRandom();
 	public static void main(String[] args) {
 		setupDisplay();
 		nextLevel();
@@ -28,7 +29,7 @@ public class LanderLevel {
 		
 		try {
 			long lastUpdateNanos = System.nanoTime();
-			while (lander != null && !lander.isLanded()) {
+			while (lander != null) {
 				Thread.sleep(60L);
         		long now = System.nanoTime();
         		if (lastUpdateNanos < now) {
@@ -52,14 +53,22 @@ public class LanderLevel {
 	}
 
 	public synchronized static void nextLevel() {
-		++level;
+		double initialVelocity = 5.0 * level;
+		double fuel = (12 - level) * 10;
+		double initialDirection = rand.nextDouble() * 2.0 * Math.PI;
+		double initialHeading = rand.nextDouble() * 2.0 * Math.PI;
+		
 		lander = new Lander.Builder()
 				.x(750.0)
 				.y(900.0)
-				.thrusterAcceleration(4.0)
+				.thrusterAcceleration(5.0)
 				.gravityAcceleration(-1.0)
-				.fuel(10.0)
+				.fuel(fuel)
+				.theta(initialHeading)
+				.dx(initialVelocity * Math.sin(initialDirection))
+				.dy(initialVelocity * Math.cos(initialDirection))
 				.build();
+		++level;
 		display.setLander(lander);
 	}
 	

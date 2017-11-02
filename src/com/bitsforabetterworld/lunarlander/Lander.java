@@ -100,11 +100,11 @@ public class Lander {
 		
 		if (m_y <= 0) {
 			m_isLanded = true;
-			if ((Math.abs(m_dx) > 2.0) || (Math.abs(m_dy) > 2.0)) {
+			if ((Math.abs(m_dx) > 8.0) || (Math.abs(m_dy) > 8.0)) {
 				// too much speed at landing
 				m_isCrashed = true;
 			}
-			if (Math.abs(m_theta) > 0.2) {
+			if (Math.abs(m_theta) > 0.5) {
 				// too steep an angle at landing
 				m_isCrashed = true;
 			}

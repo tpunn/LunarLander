@@ -184,6 +184,5 @@ class LanderTest {
 		lander.clockTick(1.0);
 		Position position = lander.getPosition();
 		assertEquals(0.0, position.getTheta(), 0.000001 /*delta*/);
-		
 	}
 }

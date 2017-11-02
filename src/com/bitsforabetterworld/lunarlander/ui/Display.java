@@ -1,28 +1,66 @@
 package com.bitsforabetterworld.lunarlander.ui;
-import com.bitsforabetterworld.lunarlander.Lander;
-import com.bitsforabetterworld.lunarlander.Lander.RotationDirection;
-import com.bitsforabetterworld.lunarlander.Position;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.RepaintManager;
+
+import com.bitsforabetterworld.lunarlander.Lander;
+import com.bitsforabetterworld.lunarlander.Lander.RotationDirection;
+import com.bitsforabetterworld.lunarlander.Position;
 
 
 public class Display {
 		
+	private class TeleopLanderKeyListener implements KeyListener {
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// Nothing to do here.
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			switch (e.getKeyChar())
+			{
+			case 'w':
+				m_lander.turnOnThruster();
+				break;
+			case 'a':
+				m_lander.turnOnRotationMotor(RotationDirection.CounterClockwise);
+				break;
+			case 'd':
+				m_lander.turnOnRotationMotor(RotationDirection.Clockwise);
+				break;
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			switch (e.getKeyChar()) {
+			case 'w':
+				m_lander.turnOffThruster();
+				break;
+			case 'a':
+				m_lander.turnOffRotationMotor();
+				break;
+			case 'd':
+				m_lander.turnOffRotationMotor();
+				break;
+			}
+			
+		}
+	}
+
 	private static final int LANDING_PAD_WIDTH = 80;
 	private final Lander m_lander;
 	private JPanel m_panel = null;
@@ -96,47 +134,7 @@ public class Display {
    public void createAndShowGUI() throws IOException {
        //Create and set up the window.
        final JFrame frame = new JFrame("Lunar Lander");
-       frame.addKeyListener(new KeyListener() {
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			switch (e.getKeyChar())
-			{
-			case 'w':
-				m_lander.turnOnThruster();
-				break;
-			case 'a':
-				m_lander.turnOnRotationMotor(RotationDirection.CounterClockwise);
-				break;
-			case 'd':
-				m_lander.turnOnRotationMotor(RotationDirection.Clockwise);
-				break;
-			}
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			switch (e.getKeyChar()) {
-			case 'w':
-				m_lander.turnOffThruster();
-				break;
-			case 'a':
-				m_lander.turnOffRotationMotor();
-				break;
-			case 'd':
-				m_lander.turnOffRotationMotor();
-				break;
-			}
-			
-		}
-    	 
-     });
+       frame.addKeyListener(new TeleopLanderKeyListener());
        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        final JPanel panel = new JPanel() {
     	   private static final long serialVersionUID = -5750610174709683930L;
@@ -144,7 +142,6 @@ public class Display {
     	   @Override
     	   public void paintComponent(Graphics g) {
     		   Display.this.paintScene(g);
-//    		   repaint();
     	   }
        };   
        panel.setPreferredSize(new Dimension(1440, 900));

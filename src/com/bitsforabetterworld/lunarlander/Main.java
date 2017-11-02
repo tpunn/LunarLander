@@ -1,7 +1,6 @@
 package com.bitsforabetterworld.lunarlander;
 import java.io.IOException;
 
-import javax.swing.RepaintManager;
 import javax.swing.SwingUtilities;
 
 import com.bitsforabetterworld.lunarlander.ui.Display;

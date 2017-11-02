@@ -72,13 +72,23 @@ public class Lander {
 		m_isRotationMotorOn = false;
 	}
 	
+	public boolean isLanded() {
+		return m_isLanded;
+	}
+	
 	public void clockTick(double dt) {
 		// With apologies to Isaac Newton.
 		// Let's update position and rotation according to their velocities
+		if (m_isLanded) {
+			return;
+		}
 		m_x += m_dx * dt;
 		m_y += m_dy * dt;
 		m_theta = (m_theta + m_dtheta * dt) % (2.0 * Math.PI);
 		
+		if (m_y <= 0) {
+			m_isLanded = true;
+		}
 		// And let's apply gravity
 		m_dy += GravityAcceleration * dt;
 		
@@ -117,8 +127,11 @@ public class Lander {
 	// Current rotational velocity of the lander in radians/second
 	private double m_dtheta;
 	
-	// Has the lander crashed yet?
+	// Has the lander crashed?
 	private boolean m_isCrashed = false;
+	
+	// Has the lander landed yet?
+	private boolean m_isLanded = false;
 
 	// Is the thruster currently on?
 	private boolean m_isThrusterOn = false;

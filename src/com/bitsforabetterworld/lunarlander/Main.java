@@ -32,12 +32,12 @@ public class Main {
 		});
 		Object waiter = new Object();
 		try {
-			while (true) {
+			while (!lander.isLanded()) {
 				Thread.sleep(60L);
 				SwingUtilities.invokeLater(new Runnable() {
 		            public void run() {
-		            display.update();	
-		         }
+		            	display.update();
+		            }
 				});
 			}
 		}

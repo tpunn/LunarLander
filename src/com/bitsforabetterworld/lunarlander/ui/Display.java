@@ -1,5 +1,6 @@
 package com.bitsforabetterworld.lunarlander.ui;
 import com.bitsforabetterworld.lunarlander.Lander;
+import com.bitsforabetterworld.lunarlander.Lander.RotationDirection;
 import com.bitsforabetterworld.lunarlander.Position;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -78,7 +79,7 @@ public class Display {
    public void createAndShowGUI() throws IOException {
        //Create and set up the window.
        final JFrame frame = new JFrame("Lunar Lander");
-     frame.addKeyListener(new KeyListener() {
+       frame.addKeyListener(new KeyListener() {
 
 		@Override
 		public void keyTyped(KeyEvent e) {
@@ -88,17 +89,34 @@ public class Display {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			if (e.getKeyChar() == ' ') {
+			switch (e.getKeyChar())
+			{
+			case 'w':
 				m_lander.turnOnThruster();
+				break;
+			case 'a':
+				m_lander.turnOnRotationMotor(RotationDirection.CounterClockwise);
+				break;
+			case 'd':
+				m_lander.turnOnRotationMotor(RotationDirection.Clockwise);
+				break;
 			}
-			
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			if (e.getKeyChar() == ' ') {
+			switch (e.getKeyChar()) {
+			case 'w':
 				m_lander.turnOffThruster();
-			}			
+				break;
+			case 'a':
+				m_lander.turnOffRotationMotor();
+				break;
+			case 'd':
+				m_lander.turnOffRotationMotor();
+				break;
+			}
+			
 		}
     	 
      });

@@ -22,13 +22,12 @@ import com.bitsforabetterworld.lunarlander.Velocity;
 public class Display {
 		
 	private static final int LANDING_PAD_WIDTH = 80;
-	private final Lander m_lander;
+	private Lander m_lander;
 	private JPanel m_panel = null;
-		
-	public Display(Lander lander) {
+
+	public void setLander(Lander lander) {
 		m_lander = lander;
 	}
-	
 	public void update() {
 		if (m_panel != null) {
 			RepaintManager repaintManager = RepaintManager.currentManager(m_panel);
@@ -38,6 +37,9 @@ public class Display {
 	}
 	public void paintScene(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
+		if (m_lander == null) {
+			return;
+		}
 		if (m_lander.isCrashed())
 		{
 			g2.setColor(Color.RED);

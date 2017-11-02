@@ -12,6 +12,15 @@ import com.bitsforabetterworld.lunarlander.ui.LanderKeyListener;
 public class LanderLevel {
 	
 	public static void main(String[] args) {
+		level(0);
+	}
+	
+	public static void nextLevel() {
+		
+	}
+	
+	public static void level(int whichLevel) {
+		
 		final Lander lander = new Lander.Builder()
 				.x(750.0)
 				.y(900.0)
@@ -19,7 +28,8 @@ public class LanderLevel {
 				.gravityAcceleration(-1.0)
 				.fuel(10.0)
 				.build();
-		final Display display = new Display(lander);
+		final Display display = new Display();
+		display.setLander(lander);
 		final LanderKeyListener landerKeyListener = new LanderKeyListener();
 		final Control control = new TeleopControl(landerKeyListener);
 		final Control autonomousControl = new AutonomousControl();

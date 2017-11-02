@@ -1,10 +1,7 @@
 package com.bitsforabetterworld.lunarlander;
 
 public class Lander {
-	
-	public static final double RotationMotorAcceleration = 0.7; // radians/second**2
-	public static final double GravityAcceleration = -1.0; // meters/second**2
-	
+		
 	public enum RotationDirection {
 		Clockwise,
 		CounterClockwise
@@ -27,6 +24,8 @@ public class Lander {
 		public Builder theta(double theta) { this.m_theta = theta; return this; }
 		public Builder dtheta(double dtheta) { this.m_dtheta = dtheta; return this; }
 		public Builder thrusterAcceleration(double accel) { this.m_thrusterAcceleration = accel; return this; }
+		public Builder rotationMotorAcceleration(double accel) { this.m_thrusterAcceleration = accel; return this; }
+		public Builder gravityAcceleration(double grav) { this.m_gravityAcceleration = grav; return this; }
 		double m_x = 0.0;
 		double m_y = 0.0;
 		double m_dx = 0.0;
@@ -34,6 +33,8 @@ public class Lander {
 		double m_theta = 0.0;
 		double m_dtheta = 0.0;
 		double m_thrusterAcceleration = 10.0;
+		double m_rotationMotorAcceleration = 0.7;
+		double m_gravityAcceleration = -1.0;
 	}
 	
 	/**
@@ -48,6 +49,9 @@ public class Lander {
 		this.m_theta = builder.m_theta % (2.0 * Math.PI);
 		this.m_dtheta = builder.m_dtheta;
 		this.m_thrusterAcceleration = builder.m_thrusterAcceleration;
+		this.m_rotationMotorAcceleration = builder.m_rotationMotorAcceleration;
+		this.m_gravityAcceleration = builder.m_gravityAcceleration;
+		
 	}
 	public Position getPosition()
 	{
@@ -80,6 +84,10 @@ public class Lander {
 		return m_isCrashed;
 	}
 	
+	double getGravityAcceleration() {
+		return m_gravityAcceleration;
+	}
+	
 	public void clockTick(double dt) {
 		// With apologies to Isaac Newton.
 		// Let's update position and rotation according to their velocities
@@ -103,7 +111,7 @@ public class Lander {
 				
 		}
 		// And let's apply gravity
-		m_dy += GravityAcceleration * dt;
+		m_dy += m_gravityAcceleration * dt;
 		
 		// And account for our engines!
 		if (m_isThrusterOn) {
@@ -113,10 +121,10 @@ public class Lander {
 		
 		if (m_isRotationMotorOn) {
 			if (m_rotationMotorDirection == RotationDirection.Clockwise) {
-				m_dtheta += RotationMotorAcceleration * dt;
+				m_dtheta += m_rotationMotorAcceleration * dt;
 			}
 			else {
-				m_dtheta -= RotationMotorAcceleration * dt;
+				m_dtheta -= m_rotationMotorAcceleration * dt;
 			}
 		}
 		
@@ -156,4 +164,10 @@ public class Lander {
 	
 	// How much thrust does the thruster give when it's on? In meters/second**2
 	private final double m_thrusterAcceleration;
+	
+	// How much does the rotation motor change our rotation speed? In radians/second**2
+	private final double m_rotationMotorAcceleration;
+	
+	// What is the acceleration of gravity? In meters/second**2 (and generally negative!!!)
+	private final double m_gravityAcceleration;
 }

@@ -28,7 +28,7 @@ public class Display {
 	private JPanel m_panel = null;
 	
 	private long m_lastPaintNanos = 0;
-	// the nose of the lander is at (0, 48)
+	// the nose of the lander is at (0, 0)
 	int[] xPoints = { 0, 16, 16, 32, 24, 16, -16, -24, -32, -16, -16 };
 	int[] yPoints = { 0, 8, 16, 48, 48, 32, 32, 48, 48, 16, 8 };
 	private final Polygon landerPolygon = new Polygon(xPoints, yPoints, xPoints.length);
@@ -82,8 +82,8 @@ public class Display {
 		double x = windowRect.getWidth() * landerPosition.getX() / Position.WIDTH_OF_SCREEN ;
 		double y = (0.9 * windowRect.getHeight()) * (Position.TOP_OF_SCREEN - landerPosition.getY()) / Position.TOP_OF_SCREEN;
 		AffineTransform rotationTransform = AffineTransform.getRotateInstance(theta);
-		AffineTransform translateTransform = AffineTransform.getTranslateInstance(x, y);
 		Rectangle landerBounds = landerPolygon.getBounds();
+		AffineTransform translateTransform = AffineTransform.getTranslateInstance(x, y - landerBounds.getCenterY());
 		AffineTransform offsetTransform = AffineTransform.getTranslateInstance(-landerBounds.getCenterX(), -landerBounds.getCenterY());
 		AffineTransform affineTransform = new AffineTransform();
 		affineTransform.concatenate(translateTransform);

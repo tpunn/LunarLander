@@ -21,7 +21,9 @@ public class AutonomousControl implements Control {
 		// - Horizontal velocity (dx) between -5 and 5 m/s
 		// - Angle (theta) between -0.3 and 0.3 radians
 		// - Change in angle (dtheta) between -0.2 and 0.2 radians/second
-		
+		//
+		// Try to get a high score! You get points for finishing a level, for fuel left at the
+		// end of a level, and for landing on the landing pad.
 		return EnumSet.of(thrustCommand, rotateCommand);
 	}
 	

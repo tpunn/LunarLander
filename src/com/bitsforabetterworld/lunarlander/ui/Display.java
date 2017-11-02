@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
@@ -16,57 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.RepaintManager;
 
 import com.bitsforabetterworld.lunarlander.Lander;
-import com.bitsforabetterworld.lunarlander.Lander.RotationDirection;
 import com.bitsforabetterworld.lunarlander.Position;
 
 
 public class Display {
 		
-	public static class LanderKeyListener implements KeyListener {
-		
-		private Lander m_lander;
-
-		public LanderKeyListener(Lander lander) {
-			m_lander = lander;
-		}
-		@Override
-		public void keyTyped(KeyEvent e) {
-			// Nothing to do here.
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			switch (e.getKeyChar())
-			{
-			case 'w':
-				m_lander.turnOnThruster();
-				break;
-			case 'a':
-				m_lander.turnOnRotationMotor(RotationDirection.CounterClockwise);
-				break;
-			case 'd':
-				m_lander.turnOnRotationMotor(RotationDirection.Clockwise);
-				break;
-			}
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			switch (e.getKeyChar()) {
-			case 'w':
-				m_lander.turnOffThruster();
-				break;
-			case 'a':
-				m_lander.turnOffRotationMotor();
-				break;
-			case 'd':
-				m_lander.turnOffRotationMotor();
-				break;
-			}
-			
-		}
-	}
-
 	private static final int LANDING_PAD_WIDTH = 80;
 	private final Lander m_lander;
 	private JPanel m_panel = null;

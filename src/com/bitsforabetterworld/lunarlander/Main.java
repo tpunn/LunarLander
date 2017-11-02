@@ -4,6 +4,7 @@ import java.io.IOException;
 import javax.swing.SwingUtilities;
 
 import com.bitsforabetterworld.lunarlander.ui.Display;
+import com.bitsforabetterworld.lunarlander.ui.LanderKeyListener;
 
 public class Main {
 
@@ -21,7 +22,7 @@ public class Main {
 		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	try {
-            		display.createAndShowGUI(new Display.LanderKeyListener(lander));
+            		display.createAndShowGUI(new LanderKeyListener(lander));
             	}
             	catch (IOException exp) {
             		System.err.println("Exception: "+exp);

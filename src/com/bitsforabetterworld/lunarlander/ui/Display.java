@@ -65,7 +65,6 @@ public class Display {
 	private final Lander m_lander;
 	private JPanel m_panel = null;
 	
-	private long m_lastPaintNanos = 0;
 	// the nose of the lander is at (0, 0)
 	int[] xPoints = { 0, 16, 16, 32, 24, 16, -16, -24, -32, -16, -16 };
 	int[] yPoints = { 0, 8, 16, 48, 48, 32, 32, 48, 48, 16, 8 };
@@ -83,11 +82,6 @@ public class Display {
 	}
 	public void paintScene(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		long now = System.nanoTime();
-		if (m_lastPaintNanos != 0 && m_lastPaintNanos < now) {
-			double dtSeconds = ((double)(now - m_lastPaintNanos)) / 1000000000.0;
-			m_lander.clockTick(dtSeconds);
-		}
 		if (m_lander.isCrashed())
 		{
 			g2.setColor(Color.RED);
@@ -105,7 +99,6 @@ public class Display {
 			g2.drawString("LANDED", 100, 200);
 			return;
 		}
-		m_lastPaintNanos = now;
 		Rectangle windowRect = g2.getDeviceConfiguration().getBounds();
 		g2.setColor(Color.BLACK);
 		g2.fillRect(0,  0, windowRect.width, windowRect.height);

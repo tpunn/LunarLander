@@ -29,10 +29,17 @@ public class Main {
             	}
             }
 		});
-		Object waiter = new Object();
 		try {
+			long lastUpdateNanos = System.nanoTime();
 			while (!lander.isLanded()) {
 				Thread.sleep(60L);
+        		long now = System.nanoTime();
+        		if (lastUpdateNanos < now) {
+        			double dtSeconds = ((double)(now - lastUpdateNanos)) / 1000000000.0;
+        			lander.clockTick(dtSeconds);
+        		}
+        		lastUpdateNanos = now;
+				
 				SwingUtilities.invokeLater(new Runnable() {
 		            public void run() {
 		            	display.update();

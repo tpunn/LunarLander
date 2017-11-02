@@ -16,6 +16,7 @@ import javax.swing.RepaintManager;
 
 import com.bitsforabetterworld.lunarlander.Lander;
 import com.bitsforabetterworld.lunarlander.Position;
+import com.bitsforabetterworld.lunarlander.Velocity;
 
 
 public class Display {
@@ -64,8 +65,27 @@ public class Display {
 		g2.fillRect(0,  surfaceY, windowRect.width, windowRect.height / 10);
 		g2.setColor(Color.YELLOW);
 		g2.fillRect((windowRect.width - LANDING_PAD_WIDTH) / 2, surfaceY, LANDING_PAD_WIDTH, windowRect.height/100);
-		g2.setColor(Color.BLUE);
 		Position landerPosition = m_lander.getPosition();
+		Velocity landerVelocity = m_lander.getVelocity();
+		double landerFuel = m_lander.getFuelRemaining();
+		
+		showStats(g2, windowRect, landerPosition, landerVelocity, landerFuel);
+		drawLander(g2, windowRect, landerPosition);
+	}
+	
+	
+	void showStats(Graphics2D g2, Rectangle rect, Position position, Velocity velocity, double fuel) {
+		g2.drawString("x: "+position.getX(), rect.width - 100, 20);
+		g2.drawString("y: "+position.getY(), rect.width - 100, 40);
+		g2.drawString("theta: "+position.getTheta(), rect.width - 100, 60);
+		g2.drawString("dx: "+velocity.getDx(), rect.width - 100, 80);
+		g2.drawString("dy: "+velocity.getDy(), rect.width - 100, 100);
+		g2.drawString("dtheta: "+velocity.getDtheta(), rect.width-100, 120);
+		g2.drawString("fuel: "+fuel, rect.width - 100, 140);
+	}
+	
+	void drawLander(Graphics2D g2, Rectangle windowRect, Position landerPosition) {
+		g2.setColor(Color.BLUE);
 		double theta = landerPosition.getTheta();
 		double x = windowRect.getWidth() * landerPosition.getX() / Position.WIDTH_OF_SCREEN ;
 		double y = (0.9 * windowRect.getHeight()) * (Position.TOP_OF_SCREEN - landerPosition.getY()) / Position.TOP_OF_SCREEN;
@@ -79,8 +99,9 @@ public class Display {
 		affineTransform.concatenate(offsetTransform);
 		g2.setTransform(affineTransform);
 		g2.fillPolygon(landerPolygon);
+		
+		
 	}
-	
    public void createAndShowGUI(KeyListener keyListener) throws IOException {
        //Create and set up the window.
        final JFrame frame = new JFrame("Lunar Lander");

@@ -5,7 +5,7 @@ package com.bitsforabetterworld.lunarlander;
  * @author cpdupuis@gmail.com
  *
  */
-class Velocity {
+public class Velocity {
 	private final double m_dx;
 	private final double m_dy;
 	private final double m_dtheta;

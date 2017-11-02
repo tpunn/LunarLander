@@ -7,7 +7,6 @@ import javax.swing.SwingUtilities;
 import com.bitsforabetterworld.lunarlander.ui.Display;
 import com.bitsforabetterworld.lunarlander.ui.LanderKeyListener;
 
-// TODO: Add fuel consumption
 // TODO: Make multiple levels
 // TODO: Points for fuel left, successfully landing on pad
 public class LanderLevel {

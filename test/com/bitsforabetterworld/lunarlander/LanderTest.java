@@ -180,4 +180,14 @@ class LanderTest {
 		Position position = lander.getPosition();
 		assertEquals(0.0, position.getTheta(), 0.000001 /*delta*/);
 	}
+	
+	@Test
+	void testFuelConsumption() {
+		Lander lander = new Lander.Builder().y(100.0).fuel(1.0).build();
+		assertEquals(1.0, lander.getFuelRemaining());
+		lander.clockTick(1.0, EnumSet.noneOf(Command.class));
+		assertEquals(1.0, lander.getFuelRemaining());
+		lander.clockTick(1.0, EnumSet.of(Command.Thrust));
+		assertEquals(0.0, lander.getFuelRemaining());
+	}
 }

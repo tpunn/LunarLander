@@ -24,9 +24,7 @@ public class Display {
 	private static final int LANDING_PAD_WIDTH = 80;
 	private final Lander m_lander;
 	private JPanel m_panel = null;
-	
-	private final Polygon landerPolygon = LanderSprite.createPolygon();
-	
+		
 	public Display(Lander lander) {
 		m_lander = lander;
 	}
@@ -70,7 +68,7 @@ public class Display {
 		double landerFuel = m_lander.getFuelRemaining();
 		
 		showStats(g2, windowRect, landerPosition, landerVelocity, landerFuel);
-		drawLander(g2, windowRect, landerPosition);
+		LanderSprite.drawLander(g2, windowRect, landerPosition);
 	}
 	
 	
@@ -84,24 +82,6 @@ public class Display {
 		g2.drawString("fuel: "+fuel, rect.width - 100, 140);
 	}
 	
-	void drawLander(Graphics2D g2, Rectangle windowRect, Position landerPosition) {
-		g2.setColor(Color.BLUE);
-		double theta = landerPosition.getTheta();
-		double x = windowRect.getWidth() * landerPosition.getX() / Position.WIDTH_OF_SCREEN ;
-		double y = (0.9 * windowRect.getHeight()) * (Position.TOP_OF_SCREEN - landerPosition.getY()) / Position.TOP_OF_SCREEN;
-		AffineTransform rotationTransform = AffineTransform.getRotateInstance(theta);
-		Rectangle landerBounds = landerPolygon.getBounds();
-		AffineTransform translateTransform = AffineTransform.getTranslateInstance(x, y - landerBounds.getCenterY());
-		AffineTransform offsetTransform = AffineTransform.getTranslateInstance(-landerBounds.getCenterX(), -landerBounds.getCenterY());
-		AffineTransform affineTransform = new AffineTransform();
-		affineTransform.concatenate(translateTransform);
-		affineTransform.concatenate(rotationTransform);
-		affineTransform.concatenate(offsetTransform);
-		g2.setTransform(affineTransform);
-		g2.fillPolygon(landerPolygon);
-		
-		
-	}
    public void createAndShowGUI(KeyListener keyListener) throws IOException {
        //Create and set up the window.
        final JFrame frame = new JFrame("Lunar Lander");

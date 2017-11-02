@@ -11,39 +11,24 @@ import com.bitsforabetterworld.lunarlander.ui.LanderKeyListener;
 // TODO: Points for fuel left, successfully landing on pad
 public class LanderLevel {
 	
+	private static Display display;
+	private static Control control;
+	private static Lander lander;
+	
 	public static void main(String[] args) {
-		level(0);
+		setupDisplay();
+		startLevel(0);
 	}
-	
-	public static void nextLevel() {
-		
-	}
-	
-	public static void level(int whichLevel) {
-		
-		final Lander lander = new Lander.Builder()
+
+	public static void startLevel(int whichLevel) {
+		lander = new Lander.Builder()
 				.x(750.0)
 				.y(900.0)
 				.thrusterAcceleration(4.0)
 				.gravityAcceleration(-1.0)
 				.fuel(10.0)
 				.build();
-		final Display display = new Display();
 		display.setLander(lander);
-		final LanderKeyListener landerKeyListener = new LanderKeyListener();
-		final Control control = new TeleopControl(landerKeyListener);
-		final Control autonomousControl = new AutonomousControl();
-		SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-            	try {
-            		display.createAndShowGUI(landerKeyListener);
-            	}
-            	catch (IOException exp) {
-            		System.err.println("Exception: "+exp);
-            		exp.printStackTrace(System.err);
-            	}
-            }
-		});
 		try {
 			long lastUpdateNanos = System.nanoTime();
 			while (!lander.isLanded()) {
@@ -66,6 +51,27 @@ public class LanderLevel {
 		catch (InterruptedException ex) {
 			System.err.println("Interrupted");
 		}
+		
+	}
+	
+	public static void setupDisplay() {
+		
+		display = new Display();
+		final LanderKeyListener landerKeyListener = new LanderKeyListener();
+		final Control teleopControl = new TeleopControl(landerKeyListener);
+		final Control autonomousControl = new AutonomousControl();
+		control = teleopControl;
+		SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+            	try {
+            		display.createAndShowGUI(landerKeyListener);
+            	}
+            	catch (IOException exp) {
+            		System.err.println("Exception: "+exp);
+            		exp.printStackTrace(System.err);
+            	}
+            }
+		});
 	}
 
 }

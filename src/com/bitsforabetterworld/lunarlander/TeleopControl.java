@@ -13,7 +13,7 @@ public class TeleopControl implements Control {
 		this.m_listener = listener;
 	}
 	
-	
+	@Override
 	public EnumSet<Command> getCommand(Position position, Velocity velocity) {
 		Command thrustCommand = Command.None;
 		Command rotateCommand = Command.None;
@@ -29,5 +29,10 @@ public class TeleopControl implements Control {
 			}
 		}
 		return EnumSet.of(thrustCommand, rotateCommand);
+	}
+	
+	@Override
+	public void reset() {
+		
 	}
 }

@@ -3,6 +3,7 @@ package com.bitsforabetterworld.lunarlander;
 import java.util.EnumSet;
 
 public class AutonomousControl implements Control {
+	@Override
 	public EnumSet<Command> getCommand(Position position, Velocity velocity) {
 		Command thrustCommand = Command.None;
 		Command rotateCommand = Command.None;
@@ -22,6 +23,11 @@ public class AutonomousControl implements Control {
 		// - Change in angle (dtheta) between -0.2 and 0.2 radians/second
 		
 		return EnumSet.of(thrustCommand, rotateCommand);
+	}
+	
+	@Override
+	public void reset() {
+		// If there's anything you need to clean up when we start a new level, clean it up here.
 	}
 }
 

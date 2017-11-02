@@ -4,4 +4,5 @@ import java.util.EnumSet;
 
 public interface Control {
 	public EnumSet<Command> getCommand(Position position, Velocity velocity);
+	public void reset();
 }

@@ -11,6 +11,13 @@ with the following requirements:
 - Angle (theta) between -0.3 and 0.3 radians
 - Change in angle (dtheta) between -0.2 and 0.2 radians/second
 
+Keyboard controls:
+
+	W: thrust
+	A: rotate counterclockwise
+	D: rotate clockwise
+	N: Next level
+
 Then, try your hand at programming the autonomous mode!
 
 In LanderLevel.main, change this:

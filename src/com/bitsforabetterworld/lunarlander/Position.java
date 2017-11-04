@@ -8,8 +8,6 @@ package com.bitsforabetterworld.lunarlander;
  *
  */
 public class Position {
-	public static final double TOP_OF_SCREEN = 1000.0; // meters
-	public static final double WIDTH_OF_SCREEN = 1500.0; // meters
 	private final double x;
 	private final double y;
 	private final double theta;

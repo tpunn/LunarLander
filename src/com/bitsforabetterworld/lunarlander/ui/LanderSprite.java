@@ -6,6 +6,7 @@ import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 
+import com.bitsforabetterworld.lunarlander.Constants;
 import com.bitsforabetterworld.lunarlander.Position;
 
 public class LanderSprite {
@@ -26,8 +27,8 @@ public class LanderSprite {
 	static void drawLander(Graphics2D g2, Rectangle windowRect, Position landerPosition, boolean isThrusterOn) {
 		g2.setColor(Color.BLUE);
 		double theta = landerPosition.getTheta();
-		double x = windowRect.getWidth() * landerPosition.getX() / Position.WIDTH_OF_SCREEN ;
-		double y = (0.9 * windowRect.getHeight()) * (Position.TOP_OF_SCREEN - landerPosition.getY()) / Position.TOP_OF_SCREEN;
+		double x = windowRect.getWidth() * landerPosition.getX() / Constants.WIDTH_OF_SCREEN ;
+		double y = (0.9 * windowRect.getHeight()) * (Constants.TOP_OF_SCREEN - landerPosition.getY()) / Constants.TOP_OF_SCREEN;
 		AffineTransform rotationTransform = AffineTransform.getRotateInstance(theta);
 		Rectangle landerBounds = landerPolygon.getBounds();
 		AffineTransform translateTransform = AffineTransform.getTranslateInstance(x, y - landerBounds.getCenterY());

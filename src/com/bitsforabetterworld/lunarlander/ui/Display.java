@@ -4,10 +4,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.event.KeyListener;
-import java.awt.geom.AffineTransform;
 import java.io.IOException;
 
 import javax.swing.JFrame;

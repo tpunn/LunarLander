@@ -89,7 +89,7 @@ public class Lander {
 		if (m_isLanded) {
 			return;
 		}
-		m_x = (m_x + m_dx * dt) % Position.WIDTH_OF_SCREEN;
+		m_x = (m_x + m_dx * dt) % Constants.WIDTH_OF_SCREEN;
 		m_y += m_dy * dt;
 		m_theta = (m_theta + m_dtheta * dt) % (2.0 * Math.PI);
 
@@ -111,7 +111,7 @@ public class Lander {
 			}
 			else {
 				// Safe landing!
-				double landingPadBonus = (Math.abs(m_x - (Position.WIDTH_OF_SCREEN / 2.0))) < (Display.LANDING_PAD_WIDTH / 2) ? 100.0 : 0.0;
+				double landingPadBonus = (Math.abs(m_x - (Constants.WIDTH_OF_SCREEN / 2.0))) < (Display.LANDING_PAD_WIDTH / 2) ? 100.0 : 0.0;
 				LanderLevel.reportSuccessfulLanding(m_fuel + landingPadBonus);
 			}
 		}

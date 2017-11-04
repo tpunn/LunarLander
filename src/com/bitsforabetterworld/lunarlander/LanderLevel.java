@@ -17,12 +17,6 @@ public class LanderLevel {
 	private static int level = 0;
 	private static final SecureRandom rand = new SecureRandom();
 	
-	public static void main(String[] args) {
-		setupDisplayAndControls(false);
-		nextLevel();
-		runLoop();
-	}
-
 	public static synchronized int getScore() {
 		return score;
 	}

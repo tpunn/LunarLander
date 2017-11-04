@@ -20,7 +20,7 @@ Keyboard controls:
 
 Then, try your hand at programming the autonomous mode!
 
-In LanderLevel.main, change this:
+In Main.main(), change this:
 
 	setupDisplayAndControls(false);
 

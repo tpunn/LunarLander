@@ -37,12 +37,12 @@ public class LanderSprite {
 		affineTransform.concatenate(rotationTransform);
 		affineTransform.concatenate(offsetTransform);
 		g2.setTransform(affineTransform);
-		g2.fillPolygon(landerPolygon);
+		g2.fill(landerPolygon);
 		if (isThrusterOn) {
 			g2.setColor(Color.RED);
-			g2.fillPolygon(redFlamePolygon);
+			g2.fill(redFlamePolygon);
 			g2.setColor(Color.YELLOW);
-			g2.fillPolygon(yellowFlamePolygon);
+			g2.fill(yellowFlamePolygon);
 		}
 		
 	}

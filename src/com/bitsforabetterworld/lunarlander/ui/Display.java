@@ -41,6 +41,15 @@ public class Display {
 		if (m_lander == null) {
 			return;
 		}
+		Rectangle windowRect = g2.getDeviceConfiguration().getBounds();
+		g2.setColor(Color.BLACK);
+		g2.fill(windowRect);
+		int surfaceY = 9 * windowRect.height / 10;
+		g2.setColor(Color.GRAY);
+		g2.fillRect(0,  surfaceY, windowRect.width, windowRect.height / 10);
+		g2.setColor(Color.YELLOW);
+		g2.fillRect((windowRect.width - LANDING_PAD_WIDTH) / 2, surfaceY, LANDING_PAD_WIDTH, windowRect.height/100);
+		
 		if (m_lander.isCrashed())
 		{
 			g2.setColor(Color.RED);
@@ -48,7 +57,7 @@ public class Display {
 			Font bigFont = font.deriveFont(Font.BOLD, 96.0f);
 			g2.setFont(bigFont);
 			g2.drawString("CRASHED", 100, 200);
-			return;
+			g2.setFont(font);
 		}
 		else if (m_lander.isLanded()) {
 			g2.setColor(Color.GREEN);
@@ -56,16 +65,9 @@ public class Display {
 			Font bigFont = font.deriveFont(Font.BOLD, 96.0f);
 			g2.setFont(bigFont);
 			g2.drawString("LANDED", 100, 200);
-			return;
+			g2.setFont(font);
 		}
-		Rectangle windowRect = g2.getDeviceConfiguration().getBounds();
-		g2.setColor(Color.BLACK);
-		g2.fillRect(0,  0, windowRect.width, windowRect.height);
-		int surfaceY = 9 * windowRect.height / 10;
-		g2.setColor(Color.GRAY);
-		g2.fillRect(0,  surfaceY, windowRect.width, windowRect.height / 10);
-		g2.setColor(Color.YELLOW);
-		g2.fillRect((windowRect.width - LANDING_PAD_WIDTH) / 2, surfaceY, LANDING_PAD_WIDTH, windowRect.height/100);
+
 		Position landerPosition = m_lander.getPosition();
 		Velocity landerVelocity = m_lander.getVelocity();
 		double landerFuel = m_lander.getFuelRemaining();

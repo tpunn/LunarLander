@@ -59,10 +59,17 @@ public class LanderLevel {
 
 	public synchronized static void nextLevel() {
 		double initialVelocity = 5.0 * level;
-		double fuel = (12 - level) * 10;
-		double initialDirection = rand.nextDouble() * 2.0 * Math.PI;
-		double initialHeading = rand.nextDouble() * 2.0 * Math.PI;
-		
+		double fuel = (20 - level) * 5;
+		double initialDirection;
+		double initialHeading;
+		if (level > 0) {
+			initialDirection = rand.nextDouble() * 2.0 * Math.PI;
+			initialHeading = rand.nextDouble() * 2.0 * Math.PI;
+		}
+		else {
+			initialDirection = 0.0;
+			initialHeading = 0.0;
+		}
 		lander = new Lander.Builder()
 				.x(750.0)
 				.y(900.0)

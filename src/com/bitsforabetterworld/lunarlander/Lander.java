@@ -79,6 +79,10 @@ public class Lander {
 		return m_gravityAcceleration;
 	}
 	
+	public boolean isThrusterOn() {
+		return m_isThrusterOn;
+	}
+	
 	public void clockTick(double dt, EnumSet<Command> commands) {
 		// With apologies to Isaac Newton.
 		// Let's update position and rotation according to their velocities
@@ -119,6 +123,10 @@ public class Lander {
 			m_dx += m_thrusterAcceleration * dt * Math.sin(m_theta);
 			m_dy += m_thrusterAcceleration * dt * Math.cos(m_theta);
 			m_fuel -= dt;
+			m_isThrusterOn = true;
+		}
+		else {
+			m_isThrusterOn = false;
 		}
 
 		if (commands.contains(Command.RollClockwise)) {
@@ -165,4 +173,6 @@ public class Lander {
 	
 	// What is the acceleration of gravity? In meters/second**2 (and generally negative!!!)
 	private final double m_gravityAcceleration;
+	
+	private boolean m_isThrusterOn = false;
 }

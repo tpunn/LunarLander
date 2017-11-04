@@ -11,16 +11,19 @@ import com.bitsforabetterworld.lunarlander.Position;
 public class LanderSprite {
 	
 	// the nose of the lander is at (0, 0)
-	private static final int[] xPoints = { 0, 16, 16, 32, 24, 16, -16, -24, -32, -16, -16 };
-	private static final int[] yPoints = { 0, 8, 16, 48, 48, 32, 32, 48, 48, 16, 8 };
-
-	public static Polygon createPolygon() {
-		return new Polygon(xPoints, yPoints, xPoints.length);
-	}
+	private static final int[] landerXPoints = { 0, 16, 16, 32, 24, 16, -16, -24, -32, -16, -16 };
+	private static final int[] landerYPoints = { 0, 8, 16, 48, 48, 32, 32, 48, 48, 16, 8 };
 	
-	static Polygon landerPolygon = createPolygon();
+	static Polygon landerPolygon = new Polygon(landerXPoints, landerYPoints, landerXPoints.length);;
 	
-	static void drawLander(Graphics2D g2, Rectangle windowRect, Position landerPosition) {
+	private static final int[] yellowFlameXPoints = {6, -6, 0 };
+	private static final int[] yellowFlameYPoints = {32, 32, 52 };
+	static Polygon yellowFlamePolygon = new Polygon(yellowFlameXPoints, yellowFlameYPoints, yellowFlameXPoints.length);
+	private static final int[] redFlameXPoints = {9, -9, 0 };
+	private static final int[] redFlameYPoints = {32, 32, 64 };
+	static Polygon redFlamePolygon = new Polygon(redFlameXPoints, redFlameYPoints, redFlameXPoints.length);
+	
+	static void drawLander(Graphics2D g2, Rectangle windowRect, Position landerPosition, boolean isThrusterOn) {
 		g2.setColor(Color.BLUE);
 		double theta = landerPosition.getTheta();
 		double x = windowRect.getWidth() * landerPosition.getX() / Position.WIDTH_OF_SCREEN ;
@@ -35,7 +38,12 @@ public class LanderSprite {
 		affineTransform.concatenate(offsetTransform);
 		g2.setTransform(affineTransform);
 		g2.fillPolygon(landerPolygon);
-		
+		if (isThrusterOn) {
+			g2.setColor(Color.RED);
+			g2.fillPolygon(redFlamePolygon);
+			g2.setColor(Color.YELLOW);
+			g2.fillPolygon(yellowFlamePolygon);
+		}
 		
 	}
 

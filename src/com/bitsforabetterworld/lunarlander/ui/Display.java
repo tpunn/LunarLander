@@ -71,7 +71,7 @@ public class Display {
 		double landerFuel = m_lander.getFuelRemaining();
 		
 		showStats(g2, windowRect, landerPosition, landerVelocity, landerFuel);
-		LanderSprite.drawLander(g2, windowRect, landerPosition);
+		LanderSprite.drawLander(g2, windowRect, landerPosition, m_lander.isThrusterOn());
 	}
 	
 	

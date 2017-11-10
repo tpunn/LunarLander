@@ -52,21 +52,28 @@ public class LanderLevel {
 	}
 
 	public synchronized static void nextLevel() {
-		double initialVelocity = 5.0 * level;
+		double initialVelocity = 0.0;
 		double fuel = (20 - level) * 5;
-		double initialDirection;
-		double initialHeading;
+		double initialDirection = 0.0;
+		double initialHeading = 0.0;
+		double initialX = Constants.WIDTH_OF_SCREEN * 0.5;
+		double initialY = Constants.TOP_OF_SCREEN * 0.9;
 		if (level > 0) {
-			initialDirection = rand.nextDouble() * 2.0 * Math.PI;
 			initialHeading = rand.nextDouble() * 2.0 * Math.PI;
 		}
-		else {
-			initialDirection = 0.0;
-			initialHeading = 0.0;
+		if (level > 1) {
+			initialX = Constants.WIDTH_OF_SCREEN * rand.nextDouble();
+		}
+		if (level > 2) {
+			initialY = Constants.TOP_OF_SCREEN * (1.0 + rand.nextDouble()) * 0.5;
+		}
+		if (level > 3) {
+			initialDirection = rand.nextDouble() * 2.0 * Math.PI;
+			initialVelocity = 5.0 * level;
 		}
 		lander = new Lander.Builder()
-				.x(750.0)
-				.y(900.0)
+				.x(initialX)
+				.y(initialY)
 				.thrusterAcceleration(Constants.THRUSTER_ACCELERATION)
 				.gravityAcceleration(Constants.GRAVITY_ACCELERATION)
 				.fuel(fuel)

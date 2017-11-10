@@ -89,13 +89,43 @@ public class Lander {
 		if (m_isLanded) {
 			return;
 		}
-		m_x = (m_x + m_dx * dt) % Constants.WIDTH_OF_SCREEN;
-		m_y += m_dy * dt;
-		m_theta = (m_theta + m_dtheta * dt) % (2.0 * Math.PI);
 
+		double dx_next = m_dx;
+		double dy_next = m_dy;
+		
 		if (m_fuel < 0.0) {
 			m_fuel = 0.0;
 		}
+		// And let's apply gravity
+		dy_next += m_gravityAcceleration * dt;
+		
+		// And account for our engines!
+		if (commands.contains(Command.Thrust) && m_fuel > 0.0) {
+			dx_next += m_thrusterAcceleration * dt * Math.sin(m_theta);
+			dy_next += m_thrusterAcceleration * dt * Math.cos(m_theta);
+			m_fuel -= dt;
+			m_isThrusterOn = true;
+		}
+		else {
+			m_isThrusterOn = false;
+		}
+
+		m_x = (m_x + ((m_dx + dx_next) / 2.0) * dt) % Constants.WIDTH_OF_SCREEN;
+		m_y += ((m_dy + dy_next) / 2.0) * dt;
+		m_theta = (m_theta + m_dtheta * dt) % (2.0 * Math.PI);
+
+		m_dx = dx_next;
+		m_dy = dy_next;
+		
+		if (commands.contains(Command.RollClockwise)) {
+			m_dtheta += m_rotationMotorAcceleration * dt;
+		}
+		if (commands.contains(Command.RollCounterclockwise)) {
+			m_dtheta -= m_rotationMotorAcceleration * dt;
+		}
+
+		
+		
 		if (m_y <= 0) {
 			m_isLanded = true;
 			if ((Math.abs(m_dx) > 5.0) || (Math.abs(m_dy) > 8.0)) {
@@ -114,26 +144,6 @@ public class Lander {
 				double landingPadBonus = (Math.abs(m_x - (Constants.WIDTH_OF_SCREEN / 2.0))) < (Display.LANDING_PAD_WIDTH / 2) ? 100.0 : 0.0;
 				LanderLevel.reportSuccessfulLanding(m_fuel + landingPadBonus);
 			}
-		}
-		// And let's apply gravity
-		m_dy += m_gravityAcceleration * dt;
-		
-		// And account for our engines!
-		if (commands.contains(Command.Thrust) && m_fuel > 0.0) {
-			m_dx += m_thrusterAcceleration * dt * Math.sin(m_theta);
-			m_dy += m_thrusterAcceleration * dt * Math.cos(m_theta);
-			m_fuel -= dt;
-			m_isThrusterOn = true;
-		}
-		else {
-			m_isThrusterOn = false;
-		}
-
-		if (commands.contains(Command.RollClockwise)) {
-			m_dtheta += m_rotationMotorAcceleration * dt;
-		}
-		if (commands.contains(Command.RollCounterclockwise)) {
-			m_dtheta -= m_rotationMotorAcceleration * dt;
 		}
 	}		
 	

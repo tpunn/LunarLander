@@ -28,8 +28,7 @@ class LanderTest {
 		assertEquals(1.0 * lander.getGravityAcceleration(), velocity.getDy());
 		assertEquals(0.0, velocity.getDx());
 		assertEquals(0.0, velocity.getDtheta());
-		// Position hasn't changed yet, because velocity was 0 at the start of this tick
-		assertEquals(100.0, position.getY());
+		assertEquals(99.5, position.getY());
 	}
 	
 	@Test
@@ -41,8 +40,8 @@ class LanderTest {
 		Position position = lander.getPosition();
 		Velocity velocity = lander.getVelocity();
 		assertEquals(2.0 * lander.getGravityAcceleration(), velocity.getDy());
-		// Position has changed by 0 + 1
-		assertEquals(99.0, position.getY());		
+		// Position has changed by 0.5 + 1.5
+		assertEquals(98.0, position.getY());
 	}
 
 	@Test
@@ -54,9 +53,10 @@ class LanderTest {
 		Position position = lander.getPosition();
 		Velocity velocity = lander.getVelocity();
 		assertEquals(4.0 * lander.getGravityAcceleration(), velocity.getDy());
-		// Position has changed by 0 + 1 + 2 + 3
-		assertEquals(94.0, position.getY());		
+		// Position has changed by 0.5 + 1.5 + 2.5 + 3.5
+		assertEquals(92.0, position.getY());
 	}
+	
 	@Test
 	void testFreeFallin8() {
 		Lander lander = new Lander.Builder().y(100.0).build();
@@ -66,8 +66,8 @@ class LanderTest {
 		Position position = lander.getPosition();
 		Velocity velocity = lander.getVelocity();
 		assertEquals(8.0 * lander.getGravityAcceleration(), velocity.getDy());
-		// Position has changed by 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7
-		assertEquals(72.0, position.getY());
+		// Position has changed by 0.5 + 1.5 + 2.5 + 3.5 + 4.5 + 5.5 + 6.5 + 7.5
+		assertEquals(68.0, position.getY());
 	}
 	
 	@Test
@@ -76,7 +76,7 @@ class LanderTest {
 		lander.clockTick(1.0, EnumSet.noneOf(Command.class));
 		Position position = lander.getPosition();
 		assertEquals(8.0, position.getX());
-		assertEquals(8.0, position.getY());
+		assertEquals(7.5, position.getY());
 		Velocity velocity = lander.getVelocity();
 		assertEquals(8.0, velocity.getDx());
 		assertEquals(7.0, velocity.getDy());		
@@ -92,8 +92,8 @@ class LanderTest {
 		// We moved at a steady 8 m/s in the X direction
 		assertEquals(64.0, position.getX());
 		
-		// In the Y direction, we moved 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 m
-		assertEquals(36.0, position.getY());
+		// In the Y direction, we moved 7.5 + 6.5 + 5.5 + 4.5 + 3.5 + 2.5 + 1.5 + 0.5 m
+		assertEquals(32.0, position.getY());
 		Velocity velocity = lander.getVelocity();
 		assertEquals(8.0, velocity.getDx());
 		assertEquals(0.0, velocity.getDy());		
@@ -109,7 +109,7 @@ class LanderTest {
 		// We moved at a steady 8 m/s in the X direction
 		assertEquals(128.0, position.getX());
 		
-		assertEquals(8.0, position.getY());
+		assertEquals(0.0, position.getY());
 		Velocity velocity = lander.getVelocity();
 		assertEquals(8.0, velocity.getDx());
 		assertEquals(-8.0, velocity.getDy());

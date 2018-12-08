@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "lunarlander",
+                "projectName": "lunarlander",
+                "workingDirectory": "c:\\Users\\cpdup\\lunar\\LunarLander",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "lunarlander",
+                "projectName": "lunarlander",
+                "workingDirectory": "c:\\Users\\cpdup\\lunar\\LunarLander",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

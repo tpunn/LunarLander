@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
@@ -34,19 +34,18 @@ public class Display {
 			repaintManager.paintDirtyRegions();
 		}
 	}
-	public void paintScene(Graphics g) {
+	public void paintScene(Graphics2D g2, Rectangle2D windowRect) {
 		if (m_lander == null) {
 			return;
 		}
-		Rectangle windowRect = g.getClipBounds();
-		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.BLACK);
 		g2.fill(windowRect);
-		int surfaceY = 9 * windowRect.height / 10;
+
+		int surfaceY = 9 * (int)windowRect.getHeight() / 10;
 		g2.setColor(Color.GRAY);
-		g2.fillRect(0,  surfaceY, windowRect.width, windowRect.height / 10);
+		g2.fillRect(0,  surfaceY, (int)windowRect.getWidth(), (int)(windowRect.getHeight() / 10.0));
 		g2.setColor(Color.YELLOW);
-		g2.fillRect((windowRect.width - LANDING_PAD_WIDTH) / 2, surfaceY, LANDING_PAD_WIDTH, windowRect.height/100);
+		g2.fillRect((int)(windowRect.getWidth() - LANDING_PAD_WIDTH) / 2, surfaceY, LANDING_PAD_WIDTH, (int)(windowRect.getHeight()/100.0));
 		
 		if (m_lander.isCrashed())
 		{
@@ -75,8 +74,8 @@ public class Display {
 	}
 	
 	
-	void showStats(Graphics2D g2, Rectangle rect, Position position, Velocity velocity, double fuel) {
-		int xPos = rect.width - 120;
+	void showStats(Graphics2D g2, Rectangle2D rect, Position position, Velocity velocity, double fuel) {
+		int xPos = (int)rect.getWidth() - 120;
 		g2.drawString("x: "+position.getX(), xPos, 20);
 		g2.drawString("y: "+position.getY(), xPos, 40);
 		g2.drawString("theta: "+position.getTheta(), xPos, 60);
@@ -97,15 +96,15 @@ public class Display {
        final JPanel panel = new JPanel() {
     	   private static final long serialVersionUID = -5750610174709683930L;
   	   
-    	   @Override
-    	   public void paintComponent(Graphics g) {
-    		   Display.this.paintScene(g);
-    	   }
+    		@Override
+    	   	public void paintComponent(Graphics g) {
+				Rectangle2D rect = frame.getBounds();
+				Display.this.paintScene((Graphics2D)g, rect);
+			}
        };   
-       panel.setPreferredSize(new Dimension(1440, 900));
+       panel.setPreferredSize(new Dimension(1200, 800));
        panel.setDoubleBuffered(true);
        frame.getContentPane().add(panel);
-
        //Display the window.
        frame.pack();
        frame.setVisible(true);

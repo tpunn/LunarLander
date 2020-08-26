@@ -21,7 +21,7 @@ dependencies {
 group = 'com.bitsforabetterworld'
 version = '1.0-SNAPSHOT'
 description = 'lunarlander'
-sourceCompatibility = '14'
+sourceCompatibility = '11'
 
 
 tasks.withType(JavaCompile) {

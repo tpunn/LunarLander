@@ -7,10 +7,28 @@ public class AutonomousControl implements Control {
 	public EnumSet<Command> getCommand(Position position, Velocity velocity) {
 		Command thrustCommand = Command.None;
 		Command rotateCommand = Command.None;
+	
+
+		//System.out.println(position.getY());
+		//System.out.println(velocity.getDx());
+
+		//thrustCommand = Command.Thrust;
+		//rotateCommand = Command.RollClockwise;
+
+		if (position.getTheta() > 0.2) {
+			if (velocity.getDtheta() > -0.16)
+				rotateCommand = Command.RollCounterclockwise;
+		}
+		else if (position.getTheta() < -1 * 0.2) {
+			if (velocity.getDtheta() < 0.15)
+				rotateCommand = Command.RollClockwise;
+		}
 		
-		// TODO: write code to decide if we should thrust (by setting thrustCommand = Command.Thrust) or
-		// turn on the rotation motors (by settings rotateCommand = Command.RollClockwise 
-		// or Command.RollCounterclockwise)
+		if (position.getY() < 180) {
+			if (velocity.getDy() < -7.9)
+				thrustCommand = Command.Thrust;
+		}
+
 		//
 		// Use the Position and Velocity of the lander to decide what action (if any) to take.
 		//
